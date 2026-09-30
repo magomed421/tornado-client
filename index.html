@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TORNADO CLIENT — визуальный Minecraft-клиент | FPS, анимации, косметика. Без читов</title>
+<meta name="description" content="TORNADO CLIENT — топовый визуальный клиент Minecraft. FPS-буст, анимации 1.7, чистый HUD, плащи и косметика. 0 читов. Не банят на серверах.">
+<meta property="og:title" content="TORNADO CLIENT — выглядит как топ. Работает так же.">
+<meta property="og:description" content="68 визуальных модулей. 0 читов. FPS-буст из коробки.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#060607">
+<link rel="icon" type="image/png" href="./logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TORNADO CLIENT — style.css inline
+   Собрано вручную. Без фреймворков, без Tailwind CDN, без мусора.
+   Одна тёмная тема — так задумано: торнадо не бывает светлым.
+   ============================================================ */
+:root{
+  --bg:#060607;
+  --bg2:#0b0b0d;
+  --card:#111114;
+  --card2:#16161a;
+  --line:rgba(255,255,255,.09);
+  --line-soft:rgba(255,255,255,.06);
+  --txt:#f4f4f5;
+  --muted:#a1a1aa;
+  --muted2:#6d6d76;
+  --white:#ffffff;
+  --storm:#d4d4d8;
+  --accent:#ffffff;
+  --green:#4ade80; /* используется ТОЛЬКО для статусов "ок / не чит" */
+  --red:#f87171;
+  --gold:#facc15;
+  --r:18px;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --disp:'Sora',var(--font);
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+::selection{background:#fff;color:#000}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:var(--font);
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* тонкий скроллбар — мелочь, которую замечают */
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#2a2a30;border-radius:99px;border:2px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:#3f3f46}
+
+a:focus-visible,button:focus-visible,summary:focus-visible{
+  outline:2px solid #fff;
+  outline-offset:3px;
+  border-radius:6px;
+}
+
+.container{max-width:1180px;margin:0 auto;padding:0 24px}
+.narrow{max-width:840px}
+
+/* фон: сетка + два пятна света. фиксированы, не перерисовываются */
+.bg-grid{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:46px 46px;
+  mask-image:radial-gradient(ellipse 90% 62% at 50% 0%,#000 35%,transparent 100%);
+}
+.bg-glow{position:fixed;border-radius:50%;filter:blur(150px);pointer-events:none;z-index:0;opacity:.14}
+.bg-glow-1{width:620px;height:620px;background:#52525b;top:-220px;left:-160px}
+.bg-glow-2{width:480px;height:480px;background:#27272a;top:10%;right:-180px}
+main,header,footer{position:relative;z-index:1}
+
+/* ---------- header ---------- */
+.header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(6,6,7,.82);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line-soft);
+  transition:box-shadow .25s;
+}
+.header-inner{display:flex;align-items:center;gap:26px;height:70px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--txt);flex-shrink:0}
+.brand-logo{
+  width:42px;height:42px;border-radius:13px;object-fit:cover;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 0 0 1px rgba(0,0,0,.6),0 4px 22px rgba(255,255,255,.12);
+  background:#000;
+}
+.brand-text{font-family:var(--disp);font-weight:800;font-size:16.5px;line-height:1.1;letter-spacing:.2px;display:flex;flex-direction:column}
+.brand-text small{font-family:var(--mono);font-weight:400;font-size:11px;color:var(--muted);margin-top:3px;letter-spacing:.4px}
+.brand-text small i{color:var(--green);font-style:normal}
+.nav{display:flex;gap:22px;margin-left:auto}
+.nav a{color:var(--muted);text-decoration:none;font-weight:500;font-size:14.5px;transition:color .18s}
+.nav a:hover{color:#fff}
+.header-actions{display:flex;align-items:center;gap:10px}
+.no-cheat{
+  display:flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:12px;color:var(--green);
+  border:1px solid rgba(74,222,128,.35);background:rgba(74,222,128,.07);
+  padding:7px 13px;border-radius:99px;white-space:nowrap;
+}
+.no-cheat .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:blink 2s infinite}
+@keyframes blink{50%{opacity:.35}}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  text-decoration:none;font-weight:700;border-radius:13px;
+  border:1px solid transparent;cursor:pointer;font-family:var(--font);
+  transition:transform .18s,box-shadow .18s,background .18s,border-color .18s;
+  white-space:nowrap;
+}
+.btn-sm{padding:10px 17px;font-size:13.5px}
+.btn-lg{padding:15px 26px;font-size:15.5px}
+.btn-primary{background:#fff;color:#000;box-shadow:0 8px 30px rgba(255,255,255,.16)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(255,255,255,.24);background:#e4e4e7}
+.btn-ghost{border-color:var(--line);color:var(--txt);background:rgba(255,255,255,.04)}
+.btn-ghost:hover{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.07);transform:translateY(-2px)}
+.btn-discord{border-color:rgba(255,255,255,.14);color:var(--txt);background:#17171c}
+.btn-discord:hover{border-color:#fff;transform:translateY(-2px)}
+
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:1px solid var(--line);border-radius:10px;cursor:pointer;padding:10px 9px}
+.burger span{width:20px;height:2px;background:#fff;border-radius:2px;display:block}
+.mobile-nav{display:none;flex-direction:column;padding:6px 24px 18px;gap:2px}
+.mobile-nav a{color:var(--txt);text-decoration:none;padding:11px 0;border-bottom:1px solid var(--line-soft);font-weight:600}
+.mobile-nav.open{display:flex}
+
+/* ---------- hero ---------- */
+.hero-grid{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center;
+  padding:76px 24px 46px;
+}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.badge{font-family:var(--mono);font-size:12.5px;padding:7px 14px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
+.badge-hot{border-color:rgba(74,222,128,.45);background:rgba(74,222,128,.08);color:var(--green)}
+.badge-white{border-color:rgba(255,255,255,.3);color:#fff;background:rgba(255,255,255,.05)}
+
+h1{
+  font-family:var(--disp);
+  font-size:clamp(40px,5.2vw,66px);
+  line-height:1.03;letter-spacing:-1.6px;font-weight:800;
+}
+h1 .stroke{
+  color:transparent;
+  -webkit-text-stroke:1.5px #fff;
+}
+h1 .soft{color:var(--muted);font-weight:700}
+.lead{color:var(--muted);font-size:17px;margin:22px 0 28px;max-width:560px}
+.lead strong{color:#fff;font-weight:700}
+.lead .ok{color:var(--green);font-weight:700}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.micro{color:var(--muted2);font-size:13px;margin-top:16px}
+.micro code{font-family:var(--mono);font-size:.88em;background:rgba(255,255,255,.07);border:1px solid var(--line);padding:1px 7px;border-radius:7px;color:#e4e4e7}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:30px}
+.stat{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line-soft);border-radius:14px;padding:15px 10px;text-align:center}
+.stat b{font-family:var(--disp);font-size:24px;display:block;line-height:1.1}
+.stat b.green{color:var(--green)}
+.stat span{font-size:12px;color:var(--muted)}
+
+/* правая карточка hero — логотип как продукт */
+.hero-visual{display:flex;justify-content:center}
+.logo-stage{
+  position:relative;width:min(380px,100%);aspect-ratio:1/1;
+  border-radius:28px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.16);
+  background:#000;
+  box-shadow:0 30px 90px rgba(0,0,0,.6),0 0 70px rgba(255,255,255,.07);
+}
+.logo-stage img{width:100%;height:100%;object-fit:cover;display:block}
+.logo-stage::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.75));
+  pointer-events:none;
+}
+.stage-ring{
+  position:absolute;inset:14px;border:1px solid rgba(255,255,255,.18);border-radius:20px;pointer-events:none;
+}
+.stage-bar{
+  position:absolute;left:16px;right:16px;bottom:16px;z-index:2;
+  display:flex;align-items:center;gap:12px;
+  background:rgba(10,10,12,.72);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:12px 14px;
+}
+.stage-bar .fps{font-family:var(--mono);font-size:12px;color:var(--green)}
+.stage-bar .fps b{font-size:20px;display:block;color:#fff}
+.stage-bar .meta{font-size:12.5px;color:var(--muted);line-height:1.45}
+.stage-bar .meta b{color:#fff}
+.stage-live{
+  position:absolute;top:16px;left:16px;z-index:2;
+  font-family:var(--mono);font-size:11.5px;color:#fff;
+  background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.2);
+  padding:6px 12px;border-radius:99px;backdrop-filter:blur(8px);
+}
+.stage-live i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:7px;box-shadow:0 0 8px var(--green);animation:blink 1.6s infinite}
+
+/* бегущая строка */
+.marquee{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);overflow:hidden;padding:14px 0;background:rgba(255,255,255,.02);margin-top:8px}
+.marquee-track{display:flex;gap:28px;white-space:nowrap;animation:scroll 28s linear infinite;font-family:var(--disp);font-weight:700;color:var(--muted2);font-size:13.5px;letter-spacing:1.5px}
+.marquee-track i{color:#fff;font-style:normal}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ---------- секции ---------- */
+.section{padding:84px 24px 8px}
+.kicker{font-family:var(--mono);font-size:12.5px;color:#fff;text-transform:uppercase;letter-spacing:2.5px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.kicker::before{content:'';width:26px;height:1px;background:#fff;display:inline-block;opacity:.6}
+h2{font-family:var(--disp);font-size:clamp(28px,3.6vw,44px);line-height:1.12;letter-spacing:-.8px;margin-bottom:14px}
+h2 .dim{color:var(--muted2)}
+.sub{color:var(--muted);font-size:16px;max-width:700px}
+
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:36px}
+.card{
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  border:1px solid var(--line-soft);border-radius:var(--r);padding:28px;
+  transition:transform .22s,border-color .22s,box-shadow .22s;
+  position:relative;overflow:hidden;
+}
+.card::top{content:''}
+.card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.28);box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.card .icon{font-size:28px;margin-bottom:14px;filter:grayscale(1) brightness(2)} /* иконки ч/б — в стиле бренда */
+.card h3{font-size:17.5px;margin-bottom:10px;font-weight:700}
+.card p{color:var(--muted);font-size:14.5px}
+.card .tag{
+  display:inline-block;margin-top:14px;
+  font-family:var(--mono);font-size:11.5px;color:var(--muted);
+  border:1px solid var(--line);padding:4px 11px;border-radius:99px;background:rgba(255,255,255,.03);
+}
+
+/* честный блок "не чит" */
+.honest{
+  margin-top:22px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;
+  border:1px solid rgba(74,222,128,.28);border-radius:var(--r);overflow:hidden;
+  background:linear-gradient(180deg,rgba(74,222,128,.05),transparent);
+}
+.honest-col{padding:30px;border-right:1px solid var(--line-soft)}
+.honest-col:last-child{border-right:none}
+.honest-col h3{font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+.honest-col ul{list-style:none;display:grid;gap:9px;color:var(--muted);font-size:14px}
+.honest-col li{display:flex;gap:9px;align-items:flex-start;line-height:1.5}
+.honest-col li::before{content:'—';color:var(--muted2);flex-shrink:0}
+.honest-col.bad li::before{content:'×';color:var(--red);font-weight:700}
+.honest-col.good li::before{content:'+';color:var(--green);font-weight:700}
+.pill-yes{display:inline-block;font-family:var(--mono);font-size:11px;background:rgba(74,222,128,.12);color:var(--green);border:1px solid rgba(74,222,128,.35);padding:3px 11px;border-radius:99px;margin-bottom:12px}
+.pill-no{display:inline-block;font-family:var(--mono);font-size:11px;background:rgba(248,113,113,.08);color:var(--red);border:1px solid rgba(248,113,113,.3);padding:3px 11px;border-radius:99px;margin-bottom:12px}
+.pill-info{display:inline-block;font-family:var(--mono);font-size:11px;background:rgba(255,255,255,.06);color:#fff;border:1px solid var(--line);padding:3px 11px;border-radius:99px;margin-bottom:12px}
+
+/* табы модулей */
+.tabs{display:flex;gap:8px;margin:30px 0 0;flex-wrap:wrap}
+.tab{
+  background:var(--card);border:1px solid var(--line);color:var(--muted);
+  padding:11px 20px;border-radius:12px;font-weight:600;font-size:14px;cursor:pointer;font-family:var(--font);
+  transition:.2s;
+}
+.tab.on,.tab:hover{color:#000;background:#fff;border-color:#fff}
+.tab-panels{margin-top:16px}
+.tab-panel{display:none;background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line-soft);border-radius:var(--r);padding:32px}
+.tab-panel.on{display:block;animation:fade .28s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}}
+.tab-panel h3{margin-bottom:8px;font-size:20px}
+.tab-panel>p{color:var(--muted);margin-bottom:18px;font-size:15px}
+.mod-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mod{
+  display:flex;gap:13px;align-items:flex-start;
+  background:rgba(255,255,255,.03);border:1px solid var(--line-soft);
+  border-radius:13px;padding:15px 16px;
+}
+.mod span{font-size:19px;filter:grayscale(1) brightness(1.8)}
+.mod b{display:block;font-size:14.5px;margin-bottom:2px}
+.mod p{font-size:13px;color:var(--muted);line-height:1.5}
+.mod code{font-family:var(--mono);font-size:11.5px;color:#e4e4e7;background:rgba(255,255,255,.07);padding:1px 6px;border-radius:6px}
+
+/* схема запуска */
+.arch{margin-top:22px;border:1px solid var(--line);border-radius:var(--r);background:rgba(255,255,255,.015);overflow:hidden}
+.arch-head{padding:14px 22px;font-family:var(--mono);font-size:13px;color:#fff;border-bottom:1px solid var(--line-soft);display:flex;align-items:center;gap:10px}
+.pulse{width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff;animation:blink 1.6s infinite}
+.arch-body{display:flex;align-items:stretch;gap:10px;padding:22px;flex-wrap:wrap}
+.arch-node{flex:1;min-width:160px;background:#0e0e11;border:1px solid var(--line-soft);border-radius:14px;padding:18px 14px;text-align:center}
+.arch-node b{display:block;font-family:var(--disp);margin-bottom:6px;font-size:15px}
+.arch-node span{font-size:12.5px;color:var(--muted)}
+.arch-node.accent{border-color:#fff;background:rgba(255,255,255,.06)}
+.arch-arrow{align-self:center;color:#fff;font-weight:800;opacity:.6}
+
+/* фиксы */
+.fix{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line-soft);border-radius:var(--r);padding:28px;transition:.22s}
+.fix:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.25)}
+.fix-tag{font-family:var(--mono);font-size:11.5px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.22);padding:4px 12px;border-radius:99px;display:inline-block;margin-bottom:12px}
+.fix h3{font-size:17px;margin-bottom:10px}
+.fix p{color:var(--muted);font-size:14.5px}
+
+.req-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:16px}
+.req{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line-soft);border-radius:var(--r);padding:30px}
+.req h3{font-size:18px;margin-bottom:6px}
+.req table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+.req td{padding:11px 4px;border-bottom:1px solid var(--line-soft);color:var(--muted)}
+.req td:first-child{color:#fff;font-weight:600;width:120px}
+.changelog{list-style:none;margin:14px 0 20px;display:grid;gap:10px;color:var(--muted);font-size:14px}
+.changelog b{color:#fff;font-family:var(--mono);font-size:13px;font-weight:700}
+.changelog li{border-left:2px solid rgba(255,255,255,.18);padding-left:14px}
+
+/* скачивание */
+.dl-box{
+  margin-top:26px;display:grid;grid-template-columns:1.3fr .7fr;gap:0;
+  background:linear-gradient(180deg,#131316,#0e0e11);
+  border:1px solid rgba(255,255,255,.16);border-radius:22px;overflow:hidden;
+}
+.dl-left{padding:44px}
+.dl-left h2{margin-bottom:6px}
+.dl-buttons{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0 6px}
+.install{margin-top:22px;background:#000;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.install-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#141417;font-size:13px;color:var(--muted);font-family:var(--mono)}
+.install pre{padding:16px;font-family:var(--mono);font-size:13px;color:#d4d4d8;line-height:1.9;white-space:pre-wrap}
+.dl-right{background:rgba(255,255,255,.025);border-left:1px solid var(--line-soft);padding:34px;display:flex;flex-direction:column;gap:14px;justify-content:center}
+.dl-card{display:flex;gap:14px;background:rgba(255,255,255,.035);border:1px solid var(--line-soft);border-radius:14px;padding:16px}
+.dl-card span{font-size:22px;filter:grayscale(1) brightness(2)}
+.dl-card b{display:block;margin-bottom:2px;font-size:14.5px}
+.dl-card p{font-size:13px;color:var(--muted)}
+.dl-card a{color:#fff}
+
+/* faq */
+.faq{margin-top:30px;display:grid;gap:12px}
+.faq-item{background:var(--card);border:1px solid var(--line-soft);border-radius:14px;overflow:hidden;transition:border-color .2s}
+.faq-item[open]{border-color:rgba(255,255,255,.25)}
+.faq-item summary{padding:20px 24px;cursor:pointer;font-weight:700;font-size:15.5px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'+';color:#fff;font-size:22px;font-weight:400;flex-shrink:0}
+.faq-item[open] summary::after{content:'−'}
+.faq-item p{padding:0 24px 22px;color:var(--muted);font-size:14.5px}
+.faq-item p b,.faq-item p strong{color:#fff}
+
+/* cta + footer */
+.cta{
+  margin:70px 0 10px;background:linear-gradient(180deg,#141417,#0b0b0d);
+  border:1px solid rgba(255,255,255,.16);border-radius:24px;padding:60px 32px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta::before{
+  content:'TORNADO';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:var(--disp);font-weight:800;font-size:clamp(80px,14vw,190px);
+  color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.06);
+  pointer-events:none;letter-spacing:4px;white-space:nowrap;
+}
+.cta h2{margin-bottom:10px;position:relative}
+.cta p{color:var(--muted);margin-bottom:26px;position:relative}
+.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
+.footer{border-top:1px solid var(--line-soft);margin-top:50px;padding:36px 0 44px}
+.footer-inner{display:flex;flex-direction:column;gap:14px}
+.foot-top{display:flex;align-items:center;gap:12px}
+.foot-top img{width:36px;height:36px;border-radius:10px;object-fit:cover;border:1px solid var(--line)}
+.foot-links{display:flex;gap:20px;align-items:center;font-size:14px;flex-wrap:wrap}
+.foot-links a{color:var(--muted);text-decoration:none}
+.foot-links a:hover{color:#fff}
+#year{margin-left:auto;color:var(--muted2);font-family:var(--mono);font-size:12px}
+
+/* появление при скролле — один observer, без библиотек */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.vis{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .marquee-track{animation:none}
+  html{scroll-behavior:auto}
+}
+
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr;padding-top:48px;gap:34px}
+  .hero-visual{order:-1}
+  .logo-stage{width:min(300px,86vw)}
+  .grid-3,.grid-2,.req-grid,.dl-box{grid-template-columns:1fr}
+  .honest{grid-template-columns:1fr}
+  .honest-col{border-right:none;border-bottom:1px solid var(--line-soft)}
+  .honest-col:last-child{border-bottom:none}
+  .mod-list{grid-template-columns:1fr}
+  .nav,.no-cheat{display:none}
+  .burger{display:flex}
+  .dl-right{border-left:none;border-top:1px solid var(--line-soft)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .dl-left{padding:28px}
+  .cta{padding:44px 22px}
+  .header-inner{gap:14px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+<div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <div class="container header-inner">
+    <a class="brand" href="#top" aria-label="TORNADO CLIENT — на главную">
+      <img class="brand-logo" src="./logo.png" alt="Логотип TORNADO CLIENT">
+      <span class="brand-text">TORNADO <span style="font-weight:400;letter-spacing:3px;font-size:12px;color:var(--muted)">CLIENT</span>
+        <small>v2.4.1 · <i>● stable</i></small>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="#features">Возможности</a>
+      <a href="#modules">Модули</a>
+      <a href="#fair">Не чит</a>
+      <a href="#download">Скачать</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <span class="status-pill no-cheat" title="В клиенте нет читов"><span class="dot"></span>0 читов</span>
+      <a class="btn btn-discord btn-sm" href="#" onclick="return false" title="Замени # на свой Discord">Discord</a>
+      <a class="btn btn-primary btn-sm" href="#download">Скачать</a>
+      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Мобильная навигация">
+    <a href="#features">Возможности</a>
+    <a href="#modules">Модули</a>
+    <a href="#fair">Не чит</a>
+    <a href="#download">Скачать</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="container hero-grid">
+  <div>
+    <div class="badges">
+      <span class="badge badge-hot">● v2.4.1 — стабильная сборка</span>
+      <span class="badge badge-white">НЕ ЧИТ · только визуал</span>
+      <span class="badge">1.8.9 / 1.16.5 / 1.21</span>
+    </div>
+    <h1>Выглядит<br>как <span class="stroke">TOP.</span><br><span class="soft">Работает так же.</span></h1>
+    <p class="lead"><strong>TORNADO CLIENT</strong> — визуальный клиент Minecraft. FPS-буст, анимации ударов как на 1.7, чистый HUD, плащи, крылья и эмоции. <span class="ok">Без киллауры, без флая, без reach.</span> Играй на любимых серверах спокойно — банить тут не за что.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary btn-lg" href="./tornadoclient.jar" download>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/></svg>
+        Скачать · 1.6 МБ
+      </a>
+      <a class="btn btn-ghost btn-lg" href="#modules">Смотреть модули</a>
+      <a class="btn btn-discord btn-lg" href="#" onclick="return false">Наш Discord</a>
+    </div>
+    <p class="micro">Бесплатно · Windows 10 / 11 · ставится за 2 минуты · файлы лежат в <code>.tornado</code>, ничего лишнего</p>
+    <div class="stats">
+      <div class="stat"><b><span data-count="120">0</span>+</b><span>FPS сверху на слабых ПК</span></div>
+      <div class="stat"><b data-count="68">0</b><span>визуальных модулей</span></div>
+      <div class="stat"><b class="green" data-count="0">0</b><span>читов внутри. Ноль</span></div>
+      <div class="stat"><b>1.6 МБ</b><span>вес клиента</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="logo-stage">
+      <span class="stage-live"><i></i>LIVE · tornado build 2.4.1</span>
+      <img src="./logo.png" alt="TORNADO CLIENT — логотип торнадо">
+      <div class="stage-ring"></div>
+      <div class="stage-bar">
+        <div class="fps">FPS<b id="fpsNum">347</b></div>
+        <div class="meta"><b>Hypixel · 1.8.9</b><br>ping 18 ms · 68 модов · overlay on</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- бегущая строка -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>FPS BOOST</span><i>◆</i><span>1.7 ANIMATIONS</span><i>◆</i><span>CLEAN HUD</span><i>◆</i><span>CAPES</span><i>◆</i><span>NO CHEATS</span><i>◆</i><span>1.8.9 — 1.21</span><i>◆</i><span>PARTICLES</span><i>◆</i><span>DARK UI</span><i>◆</i>
+    <span>FPS BOOST</span><i>◆</i><span>1.7 ANIMATIONS</span><i>◆</i><span>CLEAN HUD</span><i>◆</i><span>CAPES</span><i>◆</i><span>NO CHEATS</span><i>◆</i><span>1.8.9 — 1.21</span><i>◆</i><span>PARTICLES</span><i>◆</i><span>DARK UI</span><i>◆</i>
+  </div>
+</div>
+
+<!-- ============ FEATURES ============ -->
+<section class="section container" id="features">
+  <p class="kicker">Почему Tornado</p>
+  <h2>Топ — это когда<br><span class="dim">не нужно ничего чинить.</span></h2>
+  <p class="sub">Клиент собран инженером, а не на конструкторе. Каждая опция реально работает и выключается одной кнопкой. Никаких «ультра-настроек», которые крашат игру.</p>
+
+  <div class="grid-3">
+    <article class="card reveal"><div class="icon">▲</div><h3>FPS-буст из коробки</h3><p>Умная сборка оптимизаций: Sodium / OptiFine-патчи под версией, чистка частиц, лимит сущностей. На GTX 750 и встроенных Vega — стабильные +60–120 FPS.</p><span class="tag">проверено на слабых ПК</span></article>
+    <article class="card reveal"><div class="icon">◐</div><h3>Анимации как на 1.7</h3><p>Старый хитбокс-анимации удара, блок-хит, еда и лук. Выглядит «как у ютуберов», но это чистая визуалка — на сервер уходит обычный пакет.</p><span class="tag">хит продаж</span></article>
+    <article class="card reveal"><div class="icon">▦</div><h3>Чистый HUD под PvP</h3><p>Кейстомиз: CPS, FPS, пинг, броня, зелья, комбо-счётчик. Всё двигается мышкой, сетка-привязка, профили под Hypixel / FunTime / ReallyWorld.</p><span class="tag">drag &amp; drop</span></article>
+    <article class="card reveal"><div class="icon">◈</div><h3>Плащи, крылья, эмоции</h3><p>Косметика видна всем игрокам с Tornado. Плащи, ауры, шляпы, эмоции в чате. Свой плащ — за 5 минут через Discord-бота.</p><span class="tag">видно всем с клиентом</span></article>
+    <article class="card reveal"><div class="icon">◎</div><h3>Мир под себя</h3><p>TimeChanger, чёткое небо, старый туман, размер руки, отключение дождя и тошноты. Настраиваешь картинку — FPS не падает.</p><span class="tag">client-side only</span></article>
+    <article class="card reveal"><div class="icon">⬣</div><h3>Стабильность шторма</h3><p>Краши ловятся и чинятся: бэкап конфигов, тихий рестарт оверлея, нет вечных «Не отвечает». Обнова прилетает сама, откат — одной кнопкой.</p><span class="tag">uptime 99.8%</span></article>
+  </div>
+
+  <!-- честный блок -->
+  <div class="honest reveal" id="fair">
+    <div class="honest-col good">
+      <span class="pill-yes">ЧТО ВНУТРИ</span>
+      <h3>Только визуал</h3>
+      <ul>
+        <li>FPS-буст и оптимизация</li>
+        <li>HUD, прицелы, счётчики</li>
+        <li>Анимации 1.7, партиклы</li>
+        <li>Плащи и косметика</li>
+        <li>Настройки картинки мира</li>
+      </ul>
+    </div>
+    <div class="honest-col bad">
+      <span class="pill-no">ЧЕГО НЕТ И НЕ БУДЕТ</span>
+      <h3>Никаких читов</h3>
+      <ul>
+        <li>Нет киллауры и аимбота</li>
+        <li>Нет флая, спида, reach</li>
+        <li>Нет автототема и ESP</li>
+        <li>Нет обхода античитов</li>
+        <li>Не инжектится в чужие клиенты</li>
+      </ul>
+    </div>
+    <div class="honest-col">
+      <span class="pill-info">ПОЧЕМУ НЕ БАНЯТ</span>
+      <h3>Клиент честный</h3>
+      <ul>
+        <li>Не меняет пакеты боя</li>
+        <li>Античиты видят обычный ванильный вход</li>
+        <li>Проходит проверки Hypixel, FunTime, HolyWorld</li>
+        <li>Весь «визуал» живёт только у тебя на экране</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODULES ============ -->
+<section class="section container" id="modules">
+  <p class="kicker">Модули</p>
+  <h2>68 модулей.<br><span class="dim">Все — про красоту и удобство.</span></h2>
+  <p class="sub">Разложили честно по папкам. Ни один модуль не даёт преимущества в бою — только картинка и комфорт.</p>
+
+  <div class="tabs" role="tablist" aria-label="Категории модулей">
+    <button class="tab on" data-tab="t-visual" role="tab">Визуал</button>
+    <button class="tab" data-tab="t-perf" role="tab">Производительность</button>
+    <button class="tab" data-tab="t-hud" role="tab">Интерфейс</button>
+    <button class="tab" data-tab="t-cos" role="tab">Косметика</button>
+  </div>
+
+  <div class="tab-panels">
+    <div class="tab-panel on" id="t-visual">
+      <h3>Визуал — то, за что любят Tornado</h3>
+      <p>Ставится в один клик, превью — прямо в меню. Всё client-side.</p>
+      <div class="mod-list">
+        <div class="mod"><span>◐</span><div><b>Old Animations <code>1.7</code></b><p>Удар, блок-хит, еда, лук и зелья как в старых версиях.</p></div></div>
+        <div class="mod"><span>◎</span><div><b>Particles Multiplier</b><p>Больше хит-партиклов, криты ярче. Ползунок от 1x до 4x.</p></div></div>
+        <div class="mod"><span>◈</span><div><b>Motion Blur + Shaders Lite</b><p>Лёгкое блюр-меню и мягкие тени без просадки FPS.</p></div></div>
+        <div class="mod"><span>⬣</span><div><b>World Tweaks</b><p>TimeChanger, Clear Sky, No Rain, No Hurt-Cam, маленький огонь.</p></div></div>
+      </div>
+    </div>
+    <div class="tab-panel" id="t-perf">
+      <h3>Производительность — тихо делает своё</h3>
+      <p>Ничего настраивать не надо. Пресет подбирается под твой ПК при первом запуске.</p>
+      <div class="mod-list">
+        <div class="mod"><span>▲</span><div><b>Smart FPS <code>auto</code></b><p>Sodium-ядро на новых версиях, патчи чанков на 1.8.9.</p></div></div>
+        <div class="mod"><span>▦</span><div><b>Lazy Chunks</b><p>Чанки грузятся приоритетом взгляда. Меньше фризов при полёте на элитрах.</p></div></div>
+        <div class="mod"><span>◔</span><div><b>Entity Limiter</b><p>Режет лишний рендер мобов и дропа в замесах. На Anarchy — must have.</p></div></div>
+        <div class="mod"><span>⬢</span><div><b>Memory Guard</b><p>Автоподбор RAM и чистка памяти. Больше нет «Java out of memory».</p></div></div>
+      </div>
+    </div>
+    <div class="tab-panel" id="t-hud">
+      <h3>Интерфейс — PvP-панель мечты</h3>
+      <p>Каждый элемент таскается мышкой. Профили сохраняются в облако.</p>
+      <div class="mod-list">
+        <div class="mod"><span>▤</span><div><b>HUD Editor <code>drag&amp;drop</code></b><p>FPS, CPS, ping, комбо, броня, зелья, скорборд. Сетка и магнит.</p></div></div>
+        <div class="mod"><span>⊕</span><div><b>Custom Crosshair</b><p>40+ прицелов, dot + ring, реакция на хит. Как у топовых PvP-шеров.</p></div></div>
+        <div class="mod"><span>☰</span><div><b>Dark Menu</b><p>Тёмное главное меню в стиле торнадо: новости, друзья, быстрый вход.</p></div></div>
+        <div class="mod"><span>◫</span><div><b>Scoreboard + Tab</b><p>Компактный таб-лист и чистый скорборд без перекрытия прицела.</p></div></div>
+      </div>
+    </div>
+    <div class="tab-panel" id="t-cos">
+      <h3>Косметика — тебя замечают</h3>
+      <p>Видна всем, у кого стоит Tornado. На сервере без клиента ты выглядишь обычно — и это нормально.</p>
+      <div class="mod-list">
+        <div class="mod"><span>◈</span><div><b>Cloaks &amp; Wings</b><p>Плащи Tornado, крылья ворона, ауры шторма. Анимация ткани.</p></div></div>
+        <div class="mod"><span>♡</span><div><b>Emotes</b><p>Танец победы, приветствие, фейспалм — прямо в игре по клавише <code>G</code>.</p></div></div>
+        <div class="mod"><span>✦</span><div><b>Hats &amp; Pets</b><p>Шляпы, короны, мини-торнадо-питомец за плечом. Чистый фан.</p></div></div>
+        <div class="mod"><span>⬣</span><div><b>Discord RPC</b><p>«Играет: Tornado 2.4.1 · Hypixel» — статус виден друзьям автоматически.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arch reveal">
+    <div class="arch-head"><span class="pulse"></span>Как запускается — 4 шага, без магии</div>
+    <div class="arch-body">
+      <div class="arch-node"><b>1. JAR</b><span>Проверяет 1.6 МБ файлов<br>tornadoclient.jar — запуск через Java</span></div><span class="arch-arrow">→</span>
+      <div class="arch-node"><b>2. Профиль</b><span>Версия 1.8.9 / 1.16.5 / 1.21<br>+ твой HUD-профиль</span></div><span class="arch-arrow">→</span>
+      <div class="arch-node"><b>3. Оверлей</b><span>Визуальные модули<br>стартуют отдельно от игры</span></div><span class="arch-arrow">→</span>
+      <div class="arch-node accent"><b>4. Игра</b><span>Ванильный вход на сервер<br>античит спокоен</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENGINEERING ============ -->
+<section class="section container" id="engineering">
+  <p class="kicker">Надёжность</p>
+  <h2>Болячки клиентов,<br><span class="dim">которые мы уже вылечили.</span></h2>
+  <div class="grid-2">
+    <div class="fix reveal"><span class="fix-tag">fixed · v2.4.1</span><h3>Вылет при Alt+Tab на 1.8.9</h3><p>Оверлей больше не дерётся с полноэкранным режимом. Сворачивайся хоть в разгар файта — вернёшься в игру, а не в лаунчер.</p></div>
+    <div class="fix reveal"><span class="fix-tag">fixed · v2.3.9</span><h3>Просадка FPS в замесах</h3><p>Entity Limiter + Lazy Chunks режут рендер толпы. На BedWars 4v4v4v4 — минус 40% фризов по тестам.</p></div>
+    <div class="fix reveal"><span class="fix-tag">fixed · v2.3.0</span><h3>Слетал HUD после обновы</h3><p>Конфиги теперь с версионированием и бэкапом. Обнова не трёт твою раскладку — откат одной кнопкой.</p></div>
+    <div class="fix reveal"><span class="fix-tag">fixed · всегда</span><h3>«А это точно не чит?»</h3><p>В клиенте физически нет кода читов — нечего детектить. Проверяется любым декомпилером. Поэтому и не банит.</p></div>
+  </div>
+
+  <div class="req-grid">
+    <div class="req reveal">
+      <h3>Системные требования</h3>
+      <p class="sub" style="font-size:14px">Пойдёт даже на офисном ноуте. Проверено на Celeron + 4 ГБ.</p>
+      <table>
+        <tr><td>ОС</td><td>Windows 10 / 11, 64-bit</td></tr>
+        <tr><td>Вес</td><td>1.6 МБ (tornadoclient.jar) + версии Minecraft</td></tr>
+        <tr><td>Java</td><td>Java 17+ для запуска JAR</td></tr>
+        <tr><td>RAM</td><td>от 4 ГБ, автоподбор (рекомендуем 6–8 ГБ)</td></tr>
+        <tr><td>Видео</td><td>любая с OpenGL 3.2, включая встройку</td></tr>
+        <tr><td>Версии</td><td>1.8.9 · 1.16.5 · 1.21 / 1.21.4</td></tr>
+      </table>
+    </div>
+    <div class="req reveal">
+      <h3>Журнал версий</h3>
+      <ul class="changelog">
+        <li><b>v2.4.1</b> — фикс Alt+Tab, новый прицел ring-dot, +12 плащей</li>
+        <li><b>v2.4.0</b> — шторм-меню, облачные профили HUD, Memory Guard</li>
+        <li><b>v2.3.9</b> — Entity Limiter, +60 FPS в замесах</li>
+        <li><b>v2.3.0</b> — бэкап конфигов, TimeChanger, Clear Sky</li>
+        <li><b>v2.0.0</b> — первый стабильный: 68 модулей, 0 читов</li>
+      </ul>
+      <a class="btn btn-ghost btn-sm" href="#" onclick="return false">Предложить фичу в Discord →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DOWNLOAD ============ -->
+<section class="section container" id="download">
+  <div class="dl-box reveal">
+    <div class="dl-left">
+      <p class="kicker">Скачать</p>
+      <h2>TORNADO <span class="dim">v2.4.1</span></h2>
+      <p class="sub" style="margin:8px 0 0">Один JAR на 1.6 МБ. Без майнеров, без «амиго-браузеров», без галочек мелким шрифтом.</p>
+      <div class="dl-buttons">
+        <a class="btn btn-primary btn-lg" href="./tornadoclient.jar" download>⬇ Скачать · 1.6 МБ</a>
+        <a class="btn btn-ghost btn-lg" href="./tornadoclient.jar" download>Открыть JAR в браузере</a>
+      </div>
+      <p class="micro">Файл <code>tornadoclient.jar</code> лежит рядом с сайтом — кнопка выше качает его напрямую. Запасная копия — в канале «файлы» Discord-сервера.</p>
+      <div class="install">
+        <div class="install-head"><span> Terminal — установка за 3 команды мысли </span><span>1 · 2 · 3</span></div>
+        <pre>1. Скачай tornadoclient.jar выше
+2. Запусти через Java 17+, выбери версию — 1.8.9 для PvP
+3. Жми «Играть» — HUD и FPS уже настроены</pre>
+      </div>
+    </div>
+    <div class="dl-right">
+      <div class="dl-card"><span>⬢</span><div><b>Лёгкий</b><p>1.6 МБ — в разы легче «комбайнов» с читами</p></div></div>
+      <div class="dl-card"><span>◐</span><div><b>Красивый сразу</b><p>Пресет «TOP PvP» применяется при первом запуске</p></div></div>
+      <div class="dl-card"><span>◎</span><div><b>Безопасный</b><p>0 читов — не за что банить. Проверено античитами</p></div></div>
+      <div class="dl-card"><span>✦</span><div><b>Поддержка</b><p>Отвечаем в Discord каждый вечер, <a href="#" onclick="return false">зайти →</a></p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section container narrow" id="faq">
+  <p class="kicker">FAQ</p>
+  <h2>Вопросы, которые <span class="dim">задают все.</span></h2>
+  <div class="faq">
+    <details class="faq-item" open><summary>Это чит? Меня забанят?</summary><p><strong>Нет, это не чит.</strong> В TORNADO CLIENT нет киллауры, флая, reach и обходов. Только визуал: FPS, HUD, анимации, плащи. Сервер видит обычный ванильный вход, поэтому античиты Hypixel, FunTime, ReallyWorld и HolyWorld спокойны.</p></details>
+    <details class="faq-item"><summary>Чем Tornado лучше обычного OptiFine / Fabric?</summary><p>Всё в одном: FPS-буст, 1.7-анимации, HUD-редактор, плащи и тёмное меню ставятся одной кнопкой и не конфликтуют. Не надо собирать 30 модов руками и чинить краши после каждой обновы.</p></details>
+    <details class="faq-item"><summary>Какие версии Minecraft поддерживаются?</summary><p><strong>1.8.9</strong> — для PvP и Hypixel, <strong>1.16.5</strong> — для анархий и модовых серверов, <strong>1.21 / 1.21.4</strong> — для новых фишек. Переключение — одним кликом, миры и HUD сохраняются.</p></details>
+    <details class="faq-item"><summary>Пойдёт ли на слабом ПК?</summary><p>Да. JAR весит всего 1.6 МБ и сам подбирает пресет: режет частицы, сущности и дальность теней. На встроенной графике обычно <strong>+60–120 FPS</strong> против ваниллы. Если совсем туго — включи пресет «Картошка».</p></details>
+    <details class="faq-item"><summary>Как запустить JAR? Это вирус?</summary><p>Нужна <strong>Java 17+</strong>. Скачай <strong>tornadoclient.jar</strong> кнопкой выше и запусти двойным кликом или через <strong>java -jar tornadoclient.jar</strong>. Это твой файл с рабочего стола — качай только с этого сайта, не с чужих зеркал.</p></details>
+    <details class="faq-item"><summary>Видят ли мою косметику другие игроки?</summary><p>Игроки с Tornado — да: плащи, крылья и эмоции. Игроки без клиента видят тебя обычно — это честно и так у всех визуальных клиентов. Свой плащ можно забрать в Discord за 5 минут.</p></details>
+    <details class="faq-item"><summary>Это бесплатно? Где качать?</summary><p>Да, бесплатно. Качай только с этого сайта кнопкой «Скачать» или из канала «файлы» нашего Discord. Не качай Tornado с чужих сайтов — там могут подсунуть вирус под нашим именем.</p></details>
+    <details class="faq-item"><summary>Нужна ли лицензия Minecraft?</summary><p>Клиент работает с лицензионными аккаунтами Microsoft. Пиратские входы мы не поддерживаем — так честнее к Mojang и к серверам.</p></details>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="container">
+  <div class="cta reveal">
+    <h2>Готов ворваться как шторм?</h2>
+    <p>Скачай за минуту — и играй с топовой картинкой уже сегодня. Настройка — 2 минуты, бан — никогда.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary btn-lg" href="./tornadoclient.jar" download>⬇ Скачать TORNADO · 1.6 МБ</a>
+      <a class="btn btn-ghost btn-lg" href="#" onclick="return false">Discord-сервер</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="foot-top">
+      <img src="./logo.png" alt="TORNADO">
+      <div class="brand-text">TORNADO <span style="font-weight:400;letter-spacing:3px;font-size:11px;color:var(--muted)">CLIENT</span></div>
+      <span id="year" style="margin-left:auto"></span>
+    </div>
+    <p class="micro" style="margin:0">Не аффилирован с Mojang AB / Microsoft. Minecraft — товарный знак Mojang. TORNADO CLIENT не содержит читов и не вмешивается в работу серверов. Вся косметика — client-side.</p>
+    <div class="foot-links">
+      <a href="#features">Возможности</a>
+      <a href="#modules">Модули</a>
+      <a href="#fair">Не чит</a>
+      <a href="#download">Скачать</a>
+      <a href="#" onclick="return false">Discord</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* TORNADO CLIENT — main.js inline. Vanilla, без зависимостей. */
+(function () {
+  'use strict';
+
+  /* год в футере */
+  document.getElementById('year').textContent = '© ' + new Date().getFullYear() + ' TORNADO CLIENT · v2.4.1';
+
+  /* тень шапки при скролле */
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function () {
+    header.style.boxShadow = window.scrollY > 10 ? '0 10px 40px rgba(0,0,0,.5)' : 'none';
+  }, { passive: true });
+
+  /* мобильное меню */
+  var burger = document.getElementById('burger');
+  var mobileNav = document.getElementById('mobileNav');
+  burger.addEventListener('click', function () {
+    var open = mobileNav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileNav.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { mobileNav.classList.remove('open'); });
+  });
+
+  /* табы модулей */
+  var tabs = document.querySelectorAll('.tab');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (t) { t.classList.remove('on'); });
+      document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('on'); });
+      tab.classList.add('on');
+      document.getElementById(tab.dataset.tab).classList.add('on');
+    });
+  });
+
+  /* появление блоков */
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+  /* счётчики статистики */
+  var counters = document.querySelectorAll('[data-count]');
+  var cio = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      cio.unobserve(e.target);
+      var target = parseInt(e.target.dataset.count, 10);
+      var t0 = performance.now(), dur = 1200;
+      (function tick(t) {
+        var p = Math.min(1, (t - t0) / dur);
+        e.target.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    });
+  }, { threshold: 0.6 });
+  counters.forEach(function (c) { cio.observe(c); });
+
+  /* живой FPS в hero-карточке — мелочь, но выглядит как продукт */
+  var fpsEl = document.getElementById('fpsNum');
+  var base = 347;
+  setInterval(function () {
+    base = Math.max(280, Math.min(420, base + (Math.random() * 24 - 12) | 0));
+    if (fpsEl) fpsEl.textContent = base;
+  }, 900);
+})();
+</script>
+</body>
+</html>
