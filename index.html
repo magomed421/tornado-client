@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TORNADO CLIENT — визуальный Minecraft-клиент | FPS, анимации, косметика. Без читов</title>
-<meta name="description" content="TORNADO CLIENT — топовый визуальный клиент Minecraft. FPS-буст, анимации 1.7, чистый HUD, плащи и косметика. 0 читов. Не банят на серверах.">
+<title>TORNADO CLIENT — Fabric-мод для Minecraft 1.21.11 | Меню, HUD, визуал. Без читов</title>
+<meta name="description" content="TORNADO CLIENT — визуальный Fabric-мод для Minecraft 1.21.11. Своё главное меню, ClickGUI, HUD-редактор, 36 модулей, погода с торнадо, Discord RPC. 0 читов.">
 <meta property="og:title" content="TORNADO CLIENT — выглядит как топ. Работает так же.">
-<meta property="og:description" content="68 визуальных модулей. 0 читов. FPS-буст из коробки.">
+<meta property="og:description" content="36 модулей + HUD-редактор. 0 читов. Fabric 1.21.11.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#060607">
 <link rel="icon" type="image/png" href="./logo.png">
@@ -316,9 +316,11 @@ h2 .dim{color:var(--muted2)}
 .dl-left{padding:44px}
 .dl-left h2{margin-bottom:6px}
 .dl-buttons{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0 6px}
-.install{margin-top:22px;background:#000;border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.install-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#141417;font-size:13px;color:var(--muted);font-family:var(--mono)}
-.install pre{padding:16px;font-family:var(--mono);font-size:13px;color:#d4d4d8;line-height:1.9;white-space:pre-wrap}
+.dl-steps{margin-top:22px;display:grid;gap:10px}
+.dl-step{display:flex;gap:13px;align-items:flex-start;background:#000;border:1px solid var(--line);border-radius:13px;padding:13px 15px;font-size:14px;color:var(--muted)}
+.dl-step b{color:#fff}
+.dl-step>b{font-family:var(--disp);background:#fff;color:#000;min-width:26px;height:26px;border-radius:9px;display:grid;place-items:center;font-size:14px}
+.dl-step code{font-family:var(--mono);font-size:12.5px;background:rgba(255,255,255,.07);padding:1px 7px;border-radius:6px;color:#e4e4e7}
 .dl-right{background:rgba(255,255,255,.025);border-left:1px solid var(--line-soft);padding:34px;display:flex;flex-direction:column;gap:14px;justify-content:center}
 .dl-card{display:flex;gap:14px;background:rgba(255,255,255,.035);border:1px solid var(--line-soft);border-radius:14px;padding:16px}
 .dl-card span{font-size:22px;filter:grayscale(1) brightness(2)}
@@ -361,6 +363,47 @@ h2 .dim{color:var(--muted2)}
 .foot-links a:hover{color:#fff}
 #year{margin-left:auto;color:var(--muted2);font-family:var(--mono);font-size:12px}
 
+/* ---------- вход / модалка ---------- */
+.auth-chip{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:12.5px;color:#fff;
+  border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);
+  padding:7px 8px 7px 13px;border-radius:99px;white-space:nowrap;
+}
+.auth-chip i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+.auth-chip button{background:none;border:none;color:var(--muted);font-family:var(--mono);font-size:12px;cursor:pointer;padding:4px 8px;border-radius:99px}
+.auth-chip button:hover{color:#fff;background:rgba(255,255,255,.08)}
+.modal-backdrop{
+  position:fixed;inset:0;z-index:100;display:none;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal-backdrop.open{display:flex}
+.modal{
+  width:min(480px,100%);background:#131316;color:var(--txt);
+  border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:32px;
+  box-shadow:0 40px 100px rgba(0,0,0,.6);animation:fade .25s;
+  max-height:88vh;overflow-y:auto;
+}
+.modal h3{font-family:var(--disp);font-size:22px;margin-bottom:6px}
+.modal .sub{font-size:14px;margin-bottom:18px}
+.modal .row{display:grid;gap:10px;margin:16px 0}
+.modal .btn{width:100%}
+.modal .or{display:flex;align-items:center;gap:12px;color:var(--muted2);font-family:var(--mono);font-size:12px;margin:16px 0}
+.modal .or::before,.modal .or::after{content:'';flex:1;height:1px;background:var(--line)}
+.modal .help{background:rgba(255,255,255,.03);border:1px solid var(--line-soft);border-radius:13px;padding:15px 16px;font-size:13.5px;color:var(--muted)}
+.modal .help b{color:#fff}
+.modal .help a{color:#fff}
+.modal details{margin-top:14px;font-size:13px;color:var(--muted)}
+.modal details summary{cursor:pointer;font-weight:700;color:var(--txt);font-size:13.5px}
+.modal details ol{margin:10px 0 0 20px;display:grid;gap:6px}
+.modal details code{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.07);padding:1px 6px;border-radius:6px;color:#e4e4e7}
+.modal-close{background:none;border:1px solid var(--line);color:var(--muted);border-radius:10px;padding:8px 14px;cursor:pointer;font-family:var(--font);font-size:13px;margin-top:16px;width:100%}
+.modal-close:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.mirror-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.mirror-links a{font-family:var(--mono);font-size:12.5px;color:var(--muted);text-decoration:none;border:1px solid var(--line);padding:7px 13px;border-radius:99px;transition:.18s}
+.mirror-links a:hover{color:#fff;border-color:rgba(255,255,255,.35)}
+
 /* появление при скролле — один observer, без библиотек */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
 .reveal.vis{opacity:1;transform:none}
@@ -401,7 +444,7 @@ h2 .dim{color:var(--muted2)}
     <a class="brand" href="#top" aria-label="TORNADO CLIENT — на главную">
       <img class="brand-logo" src="./logo.png" alt="Логотип TORNADO CLIENT">
       <span class="brand-text">TORNADO <span style="font-weight:400;letter-spacing:3px;font-size:12px;color:var(--muted)">CLIENT</span>
-        <small>v2.4.1 · <i>● stable</i></small>
+        <small>v1.0.0 · <i>● stable</i></small>
       </span>
     </a>
     <nav class="nav" aria-label="Основная навигация">
@@ -413,6 +456,8 @@ h2 .dim{color:var(--muted2)}
     </nav>
     <div class="header-actions">
       <span class="status-pill no-cheat" title="В клиенте нет читов"><span class="dot"></span>0 читов</span>
+      <span class="auth-chip" id="authChip" hidden><i></i><b id="authName">Гость</b><button id="logoutBtn" type="button" title="Выйти">×</button></span>
+      <button class="btn btn-discord btn-sm" id="loginBtn" type="button">Войти</button>
       <a class="btn btn-discord btn-sm" href="#" onclick="return false" title="Замени # на свой Discord">Discord</a>
       <a class="btn btn-primary btn-sm" href="#download">Скачать</a>
       <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -433,36 +478,37 @@ h2 .dim{color:var(--muted2)}
 <section class="container hero-grid">
   <div>
     <div class="badges">
-      <span class="badge badge-hot">● v2.4.1 — стабильная сборка</span>
+      <span class="badge badge-hot">● v1.0.0 — Fabric-мод</span>
       <span class="badge badge-white">НЕ ЧИТ · только визуал</span>
-      <span class="badge">1.8.9 / 1.16.5 / 1.21</span>
+      <span class="badge">Minecraft 1.21.11 · Java 21</span>
     </div>
     <h1>Выглядит<br>как <span class="stroke">TOP.</span><br><span class="soft">Работает так же.</span></h1>
-    <p class="lead"><strong>TORNADO CLIENT</strong> — визуальный клиент Minecraft. FPS-буст, анимации ударов как на 1.7, чистый HUD, плащи, крылья и эмоции. <span class="ok">Без киллауры, без флая, без reach.</span> Играй на любимых серверах спокойно — банить тут не за что.</p>
+    <p class="lead"><strong>TORNADO CLIENT</strong> — визуальный Fabric-мод: своё главное меню, ClickGUI, HUD-редактор, погода с торнадо и Discord-статус. <span class="ok">Без киллауры, без флая, без reach.</span> Весь визуал живёт только у тебя на экране — банить тут не за что.</p>
     <div class="cta-row">
       <a class="btn btn-primary btn-lg" href="./tornadoclient.jar" download>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/></svg>
         Скачать · 1.6 МБ
       </a>
       <a class="btn btn-ghost btn-lg" href="#modules">Смотреть модули</a>
-      <a class="btn btn-discord btn-lg" href="#" onclick="return false">Наш Discord</a>
+      <button class="btn btn-discord btn-lg" id="loginBtnHero" type="button">Войти через Discord</button>
     </div>
-    <p class="micro">Бесплатно · Windows 10 / 11 · ставится за 2 минуты · файлы лежат в <code>.tornado</code>, ничего лишнего</p>
+    <p class="micro">Бесплатно · Fabric Loader 0.18+ и Fabric API · кинул JAR в <code>mods</code> — и играешь</p>
+    <p class="micro">Вход — по желанию, скачивание работает и так. Сайт открывается с VPN и при блокировке Discord / YouTube: никаких внешних плееров, шрифты с системным фолбэком.</p>
     <div class="stats">
-      <div class="stat"><b><span data-count="120">0</span>+</b><span>FPS сверху на слабых ПК</span></div>
-      <div class="stat"><b data-count="68">0</b><span>визуальных модулей</span></div>
+      <div class="stat"><b data-count="36">0</b><span>модулей визуала</span></div>
+      <div class="stat"><b data-count="9">0</b><span>HUD-виджетов</span></div>
       <div class="stat"><b class="green" data-count="0">0</b><span>читов внутри. Ноль</span></div>
-      <div class="stat"><b>1.6 МБ</b><span>вес клиента</span></div>
+      <div class="stat"><b>1.6 МБ</b><span>вес мода</span></div>
     </div>
   </div>
   <div class="hero-visual">
     <div class="logo-stage">
-      <span class="stage-live"><i></i>LIVE · tornado build 2.4.1</span>
+      <span class="stage-live"><i></i>LIVE · novamenu 1.0.0</span>
       <img src="./logo.png" alt="TORNADO CLIENT — логотип торнадо">
       <div class="stage-ring"></div>
       <div class="stage-bar">
-        <div class="fps">FPS<b id="fpsNum">347</b></div>
-        <div class="meta"><b>Hypixel · 1.8.9</b><br>ping 18 ms · 68 модов · overlay on</div>
+        <div class="fps">1.21<b style="font-size:13px;color:var(--muted)">Fabric</b></div>
+        <div class="meta"><b>TORNADO CLIENT · v1.0.0</b><br>ClickGUI · HUD-редактор · Discord RPC</div>
       </div>
     </div>
   </div>
@@ -471,8 +517,8 @@ h2 .dim{color:var(--muted2)}
 <!-- бегущая строка -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
-    <span>FPS BOOST</span><i>◆</i><span>1.7 ANIMATIONS</span><i>◆</i><span>CLEAN HUD</span><i>◆</i><span>CAPES</span><i>◆</i><span>NO CHEATS</span><i>◆</i><span>1.8.9 — 1.21</span><i>◆</i><span>PARTICLES</span><i>◆</i><span>DARK UI</span><i>◆</i>
-    <span>FPS BOOST</span><i>◆</i><span>1.7 ANIMATIONS</span><i>◆</i><span>CLEAN HUD</span><i>◆</i><span>CAPES</span><i>◆</i><span>NO CHEATS</span><i>◆</i><span>1.8.9 — 1.21</span><i>◆</i><span>PARTICLES</span><i>◆</i><span>DARK UI</span><i>◆</i>
+    <span>CLICKGUI</span><i>◆</i><span>HUD EDITOR</span><i>◆</i><span>TORNADO WEATHER</span><i>◆</i><span>FULLBRIGHT</span><i>◆</i><span>NO CHEATS</span><i>◆</i><span>FABRIC 1.21.11</span><i>◆</i><span>DISCORD RPC</span><i>◆</i><span>DARK MENU</span><i>◆</i>
+    <span>CLICKGUI</span><i>◆</i><span>HUD EDITOR</span><i>◆</i><span>TORNADO WEATHER</span><i>◆</i><span>FULLBRIGHT</span><i>◆</i><span>NO CHEATS</span><i>◆</i><span>FABRIC 1.21.11</span><i>◆</i><span>DISCORD RPC</span><i>◆</i><span>DARK MENU</span><i>◆</i>
   </div>
 </div>
 
@@ -483,12 +529,12 @@ h2 .dim{color:var(--muted2)}
   <p class="sub">Клиент собран инженером, а не на конструкторе. Каждая опция реально работает и выключается одной кнопкой. Никаких «ультра-настроек», которые крашат игру.</p>
 
   <div class="grid-3">
-    <article class="card reveal"><div class="icon">▲</div><h3>FPS-буст из коробки</h3><p>Умная сборка оптимизаций: Sodium / OptiFine-патчи под версией, чистка частиц, лимит сущностей. На GTX 750 и встроенных Vega — стабильные +60–120 FPS.</p><span class="tag">проверено на слабых ПК</span></article>
-    <article class="card reveal"><div class="icon">◐</div><h3>Анимации как на 1.7</h3><p>Старый хитбокс-анимации удара, блок-хит, еда и лук. Выглядит «как у ютуберов», но это чистая визуалка — на сервер уходит обычный пакет.</p><span class="tag">хит продаж</span></article>
-    <article class="card reveal"><div class="icon">▦</div><h3>Чистый HUD под PvP</h3><p>Кейстомиз: CPS, FPS, пинг, броня, зелья, комбо-счётчик. Всё двигается мышкой, сетка-привязка, профили под Hypixel / FunTime / ReallyWorld.</p><span class="tag">drag &amp; drop</span></article>
-    <article class="card reveal"><div class="icon">◈</div><h3>Плащи, крылья, эмоции</h3><p>Косметика видна всем игрокам с Tornado. Плащи, ауры, шляпы, эмоции в чате. Свой плащ — за 5 минут через Discord-бота.</p><span class="tag">видно всем с клиентом</span></article>
-    <article class="card reveal"><div class="icon">◎</div><h3>Мир под себя</h3><p>TimeChanger, чёткое небо, старый туман, размер руки, отключение дождя и тошноты. Настраиваешь картинку — FPS не падает.</p><span class="tag">client-side only</span></article>
-    <article class="card reveal"><div class="icon">⬣</div><h3>Стабильность шторма</h3><p>Краши ловятся и чинятся: бэкап конфигов, тихий рестарт оверлея, нет вечных «Не отвечает». Обнова прилетает сама, откат — одной кнопкой.</p><span class="tag">uptime 99.8%</span></article>
+    <article class="card reveal"><div class="icon">⬣</div><h3>Своё главное меню</h3><p>Тёмное меню в стиле торнадо: анимированный фон, свои шрифты, быстрый вход. Менеджер аккаунтов — переключайся между никами не выходя из игры.</p><span class="tag">Alt Manager внутри</span></article>
+    <article class="card reveal"><div class="icon">▦</div><h3>ClickGUI + HUD-редактор</h3><p>36 модулей настраиваются в ClickGUI по категориям, 9 HUD-виджетов таскаются мышкой: броня, зелья, кейстроксы, таргет, ватермарка, музыка.</p><span class="tag">drag &amp; drop</span></article>
+    <article class="card reveal"><div class="icon">◎</div><h3>Погода с торнадо</h3><p>Фирменная фишка: объёмная погода прямо в игре — дождь, молнии и настоящий торнадо. Плюс TimeChanger, своё небо, туман и Fullbright.</p><span class="tag">client-side only</span></article>
+    <article class="card reveal"><div class="icon">◐</div><h3>PvP-визуал</h3><p>Kill-эффекты, кровь, след меча, хит-звуки, цифры урона и счётчик ударов до килла. Красиво — и ноль влияния на бой, всё рисуется только у тебя.</p><span class="tag">только картинка</span></article>
+    <article class="card reveal"><div class="icon">▲</div><h3>Оптимизация и удобство</h3><p>Отсечение невидимых сущностей, лимит FPS в фоне, зум, свободный обзор, ToggleSprint/Sneak, физика предметов и плавный чат.</p><span class="tag">Zoom · FreeLook</span></article>
+    <article class="card reveal"><div class="icon">✦</div><h3>Discord-статус и косметика</h3><p>Rich Presence показывает друзьям твою игру автоматически. Косметика игрока, свой прицел, акцентный цвет и свечение интерфейса под себя.</p><span class="tag">Discord RPC</span></article>
   </div>
 
   <!-- честный блок -->
@@ -497,11 +543,11 @@ h2 .dim{color:var(--muted2)}
       <span class="pill-yes">ЧТО ВНУТРИ</span>
       <h3>Только визуал</h3>
       <ul>
-        <li>FPS-буст и оптимизация</li>
-        <li>HUD, прицелы, счётчики</li>
-        <li>Анимации 1.7, партиклы</li>
-        <li>Плащи и косметика</li>
-        <li>Настройки картинки мира</li>
+        <li>Своё меню, ClickGUI, HUD-редактор</li>
+        <li>36 модулей: эффекты, прицел, погода</li>
+        <li>9 HUD-виджетов для PvP</li>
+        <li>Discord-статус и косметика</li>
+        <li>Всё рисуется только у тебя на экране</li>
       </ul>
     </div>
     <div class="honest-col bad">
@@ -520,9 +566,9 @@ h2 .dim{color:var(--muted2)}
       <h3>Клиент честный</h3>
       <ul>
         <li>Не меняет пакеты боя</li>
-        <li>Античиты видят обычный ванильный вход</li>
-        <li>Проходит проверки Hypixel, FunTime, HolyWorld</li>
-        <li>Весь «визуал» живёт только у тебя на экране</li>
+        <li>Обычный Fabric-вход на сервер</li>
+        <li>Визуал живёт только у тебя на экране</li>
+        <li>Исходники проверяются декомпилером</li>
       </ul>
     </div>
   </div>
@@ -531,102 +577,97 @@ h2 .dim{color:var(--muted2)}
 <!-- ============ MODULES ============ -->
 <section class="section container" id="modules">
   <p class="kicker">Модули</p>
-  <h2>68 модулей.<br><span class="dim">Все — про красоту и удобство.</span></h2>
-  <p class="sub">Разложили честно по папкам. Ни один модуль не даёт преимущества в бою — только картинка и комфорт.</p>
+  <h2>36 модулей + HUD.<br><span class="dim">Все — про красоту и удобство.</span></h2>
+  <p class="sub">Список — из самого мода, без выдумок. Ни один модуль не даёт преимущества в бою — только картинка и комфорт.</p>
 
   <div class="tabs" role="tablist" aria-label="Категории модулей">
-    <button class="tab on" data-tab="t-visual" role="tab">Визуал</button>
-    <button class="tab" data-tab="t-perf" role="tab">Производительность</button>
-    <button class="tab" data-tab="t-hud" role="tab">Интерфейс</button>
-    <button class="tab" data-tab="t-cos" role="tab">Косметика</button>
+    <button class="tab on" data-tab="t-visual" role="tab">Эффекты</button>
+    <button class="tab" data-tab="t-world" role="tab">Мир</button>
+    <button class="tab" data-tab="t-hud" role="tab">HUD</button>
+    <button class="tab" data-tab="t-comfort" role="tab">Удобство</button>
   </div>
 
   <div class="tab-panels">
     <div class="tab-panel on" id="t-visual">
-      <h3>Визуал — то, за что любят Tornado</h3>
-      <p>Ставится в один клик, превью — прямо в меню. Всё client-side.</p>
+      <h3>Эффекты — то, за что любят Tornado</h3>
+      <p>Настраиваются в ClickGUI. Всё client-side, видно только тебе.</p>
       <div class="mod-list">
-        <div class="mod"><span>◐</span><div><b>Old Animations <code>1.7</code></b><p>Удар, блок-хит, еда, лук и зелья как в старых версиях.</p></div></div>
-        <div class="mod"><span>◎</span><div><b>Particles Multiplier</b><p>Больше хит-партиклов, криты ярче. Ползунок от 1x до 4x.</p></div></div>
-        <div class="mod"><span>◈</span><div><b>Motion Blur + Shaders Lite</b><p>Лёгкое блюр-меню и мягкие тени без просадки FPS.</p></div></div>
-        <div class="mod"><span>⬣</span><div><b>World Tweaks</b><p>TimeChanger, Clear Sky, No Rain, No Hurt-Cam, маленький огонь.</p></div></div>
+        <div class="mod"><span>◐</span><div><b>BloodFx + KillEffect</b><p>Кровь при ударах и эффекты убийства. Настраивается плотность и стиль.</p></div></div>
+        <div class="mod"><span>◎</span><div><b>SwordTrail + Trails</b><p>След меча и шлейфы движения. JumpCircles — круги при прыжке.</p></div></div>
+        <div class="mod"><span>◈</span><div><b>CustomParticles</b><p>Атмосферные частицы и свои партиклы ударов вместо ванильных.</p></div></div>
+        <div class="mod"><span>⬣</span><div><b>DamageIndicators + HitsToKill</b><p>Цифры урона над целью и счётчик ударов до килла. Плюс хит-звуки.</p></div></div>
       </div>
     </div>
-    <div class="tab-panel" id="t-perf">
-      <h3>Производительность — тихо делает своё</h3>
-      <p>Ничего настраивать не надо. Пресет подбирается под твой ПК при первом запуске.</p>
+    <div class="tab-panel" id="t-world">
+      <h3>Мир — картинка под себя</h3>
+      <p>Меняется только отображение. Сервер и другие игроки ничего не замечают.</p>
       <div class="mod-list">
-        <div class="mod"><span>▲</span><div><b>Smart FPS <code>auto</code></b><p>Sodium-ядро на новых версиях, патчи чанков на 1.8.9.</p></div></div>
-        <div class="mod"><span>▦</span><div><b>Lazy Chunks</b><p>Чанки грузятся приоритетом взгляда. Меньше фризов при полёте на элитрах.</p></div></div>
-        <div class="mod"><span>◔</span><div><b>Entity Limiter</b><p>Режет лишний рендер мобов и дропа в замесах. На Anarchy — must have.</p></div></div>
-        <div class="mod"><span>⬢</span><div><b>Memory Guard</b><p>Автоподбор RAM и чистка памяти. Больше нет «Java out of memory».</p></div></div>
+        <div class="mod"><span>◎</span><div><b>Weather <code>торнадо</code></b><p>Фирменная погода: дождь, молнии, лужи — и настоящий торнадо в небе.</p></div></div>
+        <div class="mod"><span>◔</span><div><b>TimeChanger + CustomSky</b><p>Своё время суток и небо. Fog, WorldColor и Fullbright — ночь как день.</p></div></div>
+        <div class="mod"><span>⬢</span><div><b>ViewmodelFX + BlockOverlay</b><p>Эффекты руки с предметом и подсветка блока, на который смотришь.</p></div></div>
+        <div class="mod"><span>◫</span><div><b>HurtCam + ItemPhysics</b><p>Настройка тряски при уроне и живая физика выброшенных предметов.</p></div></div>
       </div>
     </div>
     <div class="tab-panel" id="t-hud">
-      <h3>Интерфейс — PvP-панель мечты</h3>
-      <p>Каждый элемент таскается мышкой. Профили сохраняются в облако.</p>
+      <h3>HUD — панель под PvP</h3>
+      <p>Каждый виджет таскается мышкой в HUD-редакторе.</p>
       <div class="mod-list">
-        <div class="mod"><span>▤</span><div><b>HUD Editor <code>drag&amp;drop</code></b><p>FPS, CPS, ping, комбо, броня, зелья, скорборд. Сетка и магнит.</p></div></div>
-        <div class="mod"><span>⊕</span><div><b>Custom Crosshair</b><p>40+ прицелов, dot + ring, реакция на хит. Как у топовых PvP-шеров.</p></div></div>
-        <div class="mod"><span>☰</span><div><b>Dark Menu</b><p>Тёмное главное меню в стиле торнадо: новости, друзья, быстрый вход.</p></div></div>
-        <div class="mod"><span>◫</span><div><b>Scoreboard + Tab</b><p>Компактный таб-лист и чистый скорборд без перекрытия прицела.</p></div></div>
+        <div class="mod"><span>▤</span><div><b>HUD-редактор <code>drag&amp;drop</code></b><p>Расставь виджеты как удобно. Позиции хранятся в конфиге мода.</p></div></div>
+        <div class="mod"><span>⊕</span><div><b>TargetHud + ArmorHud</b><p>Окно цели с хп и броня — всегда перед глазами, без лишнего в чате.</p></div></div>
+        <div class="mod"><span>☰</span><div><b>Keystrokes + BindList</b><p>Нажатия клавиш и список биндов модулей. Для роликов и контроля.</p></div></div>
+        <div class="mod"><span>◫</span><div><b>Potions + Inventory + Music</b><p>Эффекты, содержимое инвентаря, текущий трек и ватермарка Tornado.</p></div></div>
       </div>
     </div>
-    <div class="tab-panel" id="t-cos">
-      <h3>Косметика — тебя замечают</h3>
-      <p>Видна всем, у кого стоит Tornado. На сервере без клиента ты выглядишь обычно — и это нормально.</p>
+    <div class="tab-panel" id="t-comfort">
+      <h3>Удобство — мелочи решают</h3>
+      <p>То, чем пользуешься каждый день и перестаёшь замечать.</p>
       <div class="mod-list">
-        <div class="mod"><span>◈</span><div><b>Cloaks &amp; Wings</b><p>Плащи Tornado, крылья ворона, ауры шторма. Анимация ткани.</p></div></div>
-        <div class="mod"><span>♡</span><div><b>Emotes</b><p>Танец победы, приветствие, фейспалм — прямо в игре по клавише <code>G</code>.</p></div></div>
-        <div class="mod"><span>✦</span><div><b>Hats &amp; Pets</b><p>Шляпы, короны, мини-торнадо-питомец за плечом. Чистый фан.</p></div></div>
-        <div class="mod"><span>⬣</span><div><b>Discord RPC</b><p>«Играет: Tornado 2.4.1 · Hypixel» — статус виден друзьям автоматически.</p></div></div>
+        <div class="mod"><span>⊕</span><div><b>Zoom + PerspectiveMod</b><p>Зум и свободный обзор камеры. Работают на hold-клавишах.</p></div></div>
+        <div class="mod"><span>▲</span><div><b>AutoSprint + ToggleSneak</b><p>Автоспринт и переключение крады — не надо держать кнопки.</p></div></div>
+        <div class="mod"><span>◈</span><div><b>CustomCrosshair + Interface</b><p>Свой прицел, акцентный цвет, свечение UI и уведомления.</p></div></div>
+        <div class="mod"><span>✦</span><div><b>AltManager + Discord RPC</b><p>Смена аккаунтов без перезапуска и статус игры в Discord.</p></div></div>
       </div>
     </div>
   </div>
 
   <div class="arch reveal">
-    <div class="arch-head"><span class="pulse"></span>Как запускается — 4 шага, без магии</div>
+    <div class="arch-head"><span class="pulse"></span>Как поставить — 4 шага, без магии</div>
     <div class="arch-body">
-      <div class="arch-node"><b>1. JAR</b><span>Проверяет 1.6 МБ файлов<br>tornadoclient.jar — запуск через Java</span></div><span class="arch-arrow">→</span>
-      <div class="arch-node"><b>2. Профиль</b><span>Версия 1.8.9 / 1.16.5 / 1.21<br>+ твой HUD-профиль</span></div><span class="arch-arrow">→</span>
-      <div class="arch-node"><b>3. Оверлей</b><span>Визуальные модули<br>стартуют отдельно от игры</span></div><span class="arch-arrow">→</span>
-      <div class="arch-node accent"><b>4. Игра</b><span>Ванильный вход на сервер<br>античит спокоен</span></div>
+      <div class="arch-node"><b>1. Fabric</b><span>Fabric Loader 0.18+<br>и Fabric API под 1.21.11</span></div><span class="arch-arrow">→</span>
+      <div class="arch-node"><b>2. JAR</b><span>tornadoclient.jar (1.6 МБ)<br>в папку <code>mods</code></span></div><span class="arch-arrow">→</span>
+      <div class="arch-node"><b>3. Настройка</b><span>ClickGUI для модулей<br>HUD-редактор для виджетов</span></div><span class="arch-arrow">→</span>
+      <div class="arch-node accent"><b>4. Игра</b><span>Своё меню, погода,<br>статус в Discord</span></div>
     </div>
   </div>
 </section>
 
 <!-- ============ ENGINEERING ============ -->
 <section class="section container" id="engineering">
-  <p class="kicker">Надёжность</p>
-  <h2>Болячки клиентов,<br><span class="dim">которые мы уже вылечили.</span></h2>
+  <p class="kicker">Под капотом</p>
+  <h2>Что внутри технически.<br><span class="dim">Без маркетинговой пыли.</span></h2>
   <div class="grid-2">
-    <div class="fix reveal"><span class="fix-tag">fixed · v2.4.1</span><h3>Вылет при Alt+Tab на 1.8.9</h3><p>Оверлей больше не дерётся с полноэкранным режимом. Сворачивайся хоть в разгар файта — вернёшься в игру, а не в лаунчер.</p></div>
-    <div class="fix reveal"><span class="fix-tag">fixed · v2.3.9</span><h3>Просадка FPS в замесах</h3><p>Entity Limiter + Lazy Chunks режут рендер толпы. На BedWars 4v4v4v4 — минус 40% фризов по тестам.</p></div>
-    <div class="fix reveal"><span class="fix-tag">fixed · v2.3.0</span><h3>Слетал HUD после обновы</h3><p>Конфиги теперь с версионированием и бэкапом. Обнова не трёт твою раскладку — откат одной кнопкой.</p></div>
-    <div class="fix reveal"><span class="fix-tag">fixed · всегда</span><h3>«А это точно не чит?»</h3><p>В клиенте физически нет кода читов — нечего детектить. Проверяется любым декомпилером. Поэтому и не банит.</p></div>
+    <div class="fix reveal"><span class="fix-tag">client-only</span><h3>Только клиент, без сервера</h3><p>Мод работает через client-миксы Fabric: ничего не отправляет на сервер и не меняет пакеты. Поэтому визуал не палится античитами — им просто нечего детектить.</p></div>
+    <div class="fix reveal"><span class="fix-tag">optimization</span><h3>Оптимизация из коробки</h3><p>Отсечение невидимых сущностей и лимит FPS, когда окно свёрнуто. Меньше нагрузка на видеокарту в фоне и в толпе мобов.</p></div>
+    <div class="fix reveal"><span class="fix-tag">ru + en</span><h3>Русский и английский</h3><p>Интерфейс мода переведён на два языка. Свои шрифты (Bebas, Onest, Orbitron, Russo) лежат прямо в JAR — ничего не докачивается.</p></div>
+    <div class="fix reveal"><span class="fix-tag">config</span><h3>Настройки хранятся локально</h3><p>ClickGUI, позиции HUD и бинды лежат в конфиге мода. Снёс и поставил заново — настрой за минуту, всё в одном месте.</p></div>
   </div>
 
   <div class="req-grid">
     <div class="req reveal">
       <h3>Системные требования</h3>
-      <p class="sub" style="font-size:14px">Пойдёт даже на офисном ноуте. Проверено на Celeron + 4 ГБ.</p>
+      <p class="sub" style="font-size:14px">Обычный Fabric-набор. Ничего экзотического.</p>
       <table>
-        <tr><td>ОС</td><td>Windows 10 / 11, 64-bit</td></tr>
-        <tr><td>Вес</td><td>1.6 МБ (tornadoclient.jar) + версии Minecraft</td></tr>
-        <tr><td>Java</td><td>Java 17+ для запуска JAR</td></tr>
-        <tr><td>RAM</td><td>от 4 ГБ, автоподбор (рекомендуем 6–8 ГБ)</td></tr>
-        <tr><td>Видео</td><td>любая с OpenGL 3.2, включая встройку</td></tr>
-        <tr><td>Версии</td><td>1.8.9 · 1.16.5 · 1.21 / 1.21.4</td></tr>
+        <tr><td>Игра</td><td>Minecraft ~1.21.11 (Java Edition)</td></tr>
+        <tr><td>Загрузчик</td><td>Fabric Loader 0.18+ и Fabric API</td></tr>
+        <tr><td>Java</td><td>Java 21+</td></tr>
+        <tr><td>Вес</td><td>1.6 МБ (tornadoclient.jar) в папку mods</td></tr>
+        <tr><td>ОС</td><td>Windows / Linux / macOS — где идёт Fabric</td></tr>
       </table>
     </div>
     <div class="req reveal">
       <h3>Журнал версий</h3>
       <ul class="changelog">
-        <li><b>v2.4.1</b> — фикс Alt+Tab, новый прицел ring-dot, +12 плащей</li>
-        <li><b>v2.4.0</b> — шторм-меню, облачные профили HUD, Memory Guard</li>
-        <li><b>v2.3.9</b> — Entity Limiter, +60 FPS в замесах</li>
-        <li><b>v2.3.0</b> — бэкап конфигов, TimeChanger, Clear Sky</li>
-        <li><b>v2.0.0</b> — первый стабильный: 68 модулей, 0 читов</li>
+        <li><b>v1.0.0</b> — релиз: своё главное меню, ClickGUI, HUD-редактор, 36 модулей, погода с торнадо, Alt Manager, Discord RPC</li>
       </ul>
       <a class="btn btn-ghost btn-sm" href="#" onclick="return false">Предложить фичу в Discord →</a>
     </div>
@@ -638,24 +679,27 @@ h2 .dim{color:var(--muted2)}
   <div class="dl-box reveal">
     <div class="dl-left">
       <p class="kicker">Скачать</p>
-      <h2>TORNADO <span class="dim">v2.4.1</span></h2>
+      <h2>TORNADO <span class="dim">v1.0.0</span></h2>
       <p class="sub" style="margin:8px 0 0">Один JAR на 1.6 МБ. Без майнеров, без «амиго-браузеров», без галочек мелким шрифтом.</p>
       <div class="dl-buttons">
         <a class="btn btn-primary btn-lg" href="./tornadoclient.jar" download>⬇ Скачать · 1.6 МБ</a>
         <a class="btn btn-ghost btn-lg" href="./tornadoclient.jar" download>Открыть JAR в браузере</a>
       </div>
-      <p class="micro">Файл <code>tornadoclient.jar</code> лежит рядом с сайтом — кнопка выше качает его напрямую. Запасная копия — в канале «файлы» Discord-сервера.</p>
-      <div class="install">
-        <div class="install-head"><span> Terminal — установка за 3 команды мысли </span><span>1 · 2 · 3</span></div>
-        <pre>1. Скачай tornadoclient.jar выше
-2. Запусти через Java 17+, выбери версию — 1.8.9 для PvP
-3. Жми «Играть» — HUD и FPS уже настроены</pre>
+      <p class="micro">Файл <code>tornadoclient.jar</code> лежит рядом с сайтом — кнопка выше качает его напрямую. Вход не нужен. Если провайдер режет сайт или Discord — качай с зеркала, файл тот же самый.</p>
+      <div class="mirror-links">
+        <a data-mirror href="https://github.com/magomed421/tornado-client/releases/download/v2.4.1/tornadoclient.jar">Зеркало: GitHub Release · 1.6 МБ</a>
+        <a href="#" id="loginBtnDl">Войти через Discord →</a>
+      </div>
+      <div class="dl-steps">
+        <div class="dl-step"><b>1</b><span>Поставь <b>Fabric Loader 0.18+</b> и <b>Fabric API</b> под Minecraft 1.21.11</span></div>
+        <div class="dl-step"><b>2</b><span>Кинь <code>tornadoclient.jar</code> в папку <code>mods</code></span></div>
+        <div class="dl-step"><b>3</b><span>Запускай игру — меню, ClickGUI и HUD уже внутри</span></div>
       </div>
     </div>
     <div class="dl-right">
       <div class="dl-card"><span>⬢</span><div><b>Лёгкий</b><p>1.6 МБ — в разы легче «комбайнов» с читами</p></div></div>
-      <div class="dl-card"><span>◐</span><div><b>Красивый сразу</b><p>Пресет «TOP PvP» применяется при первом запуске</p></div></div>
-      <div class="dl-card"><span>◎</span><div><b>Безопасный</b><p>0 читов — не за что банить. Проверено античитами</p></div></div>
+      <div class="dl-card"><span>◐</span><div><b>Готовое меню</b><p>Тёмное главное меню и Alt Manager — без плясок с конфигами</p></div></div>
+      <div class="dl-card"><span>◎</span><div><b>Безопасный</b><p>0 читов, только client-side визуал — нечего детектить</p></div></div>
       <div class="dl-card"><span>✦</span><div><b>Поддержка</b><p>Отвечаем в Discord каждый вечер, <a href="#" onclick="return false">зайти →</a></p></div></div>
     </div>
   </div>
@@ -666,12 +710,13 @@ h2 .dim{color:var(--muted2)}
   <p class="kicker">FAQ</p>
   <h2>Вопросы, которые <span class="dim">задают все.</span></h2>
   <div class="faq">
-    <details class="faq-item" open><summary>Это чит? Меня забанят?</summary><p><strong>Нет, это не чит.</strong> В TORNADO CLIENT нет киллауры, флая, reach и обходов. Только визуал: FPS, HUD, анимации, плащи. Сервер видит обычный ванильный вход, поэтому античиты Hypixel, FunTime, ReallyWorld и HolyWorld спокойны.</p></details>
-    <details class="faq-item"><summary>Чем Tornado лучше обычного OptiFine / Fabric?</summary><p>Всё в одном: FPS-буст, 1.7-анимации, HUD-редактор, плащи и тёмное меню ставятся одной кнопкой и не конфликтуют. Не надо собирать 30 модов руками и чинить краши после каждой обновы.</p></details>
-    <details class="faq-item"><summary>Какие версии Minecraft поддерживаются?</summary><p><strong>1.8.9</strong> — для PvP и Hypixel, <strong>1.16.5</strong> — для анархий и модовых серверов, <strong>1.21 / 1.21.4</strong> — для новых фишек. Переключение — одним кликом, миры и HUD сохраняются.</p></details>
-    <details class="faq-item"><summary>Пойдёт ли на слабом ПК?</summary><p>Да. JAR весит всего 1.6 МБ и сам подбирает пресет: режет частицы, сущности и дальность теней. На встроенной графике обычно <strong>+60–120 FPS</strong> против ваниллы. Если совсем туго — включи пресет «Картошка».</p></details>
-    <details class="faq-item"><summary>Как запустить JAR? Это вирус?</summary><p>Нужна <strong>Java 17+</strong>. Скачай <strong>tornadoclient.jar</strong> кнопкой выше и запусти двойным кликом или через <strong>java -jar tornadoclient.jar</strong>. Это твой файл с рабочего стола — качай только с этого сайта, не с чужих зеркал.</p></details>
-    <details class="faq-item"><summary>Видят ли мою косметику другие игроки?</summary><p>Игроки с Tornado — да: плащи, крылья и эмоции. Игроки без клиента видят тебя обычно — это честно и так у всех визуальных клиентов. Свой плащ можно забрать в Discord за 5 минут.</p></details>
+    <details class="faq-item" open><summary>Это чит? Меня забанят?</summary><p><strong>Нет, это не чит.</strong> В TORNADO CLIENT нет киллауры, флая, reach и обходов. Только визуал: меню, HUD, эффекты, погода. Мод работает через client-миксы и ничего не отправляет на сервер, поэтому античитам детектить нечего.</p></details>
+    <details class="faq-item"><summary>Что нужно для установки?</summary><p>Minecraft <strong>~1.21.11</strong>, <strong>Fabric Loader 0.18+</strong>, <strong>Fabric API</strong> и <strong>Java 21+</strong>. Кинь <strong>tornadoclient.jar</strong> в папку <code>mods</code> и запускай — меню, ClickGUI и HUD уже внутри.</p></details>
+    <details class="faq-item"><summary>На каких версиях работает?</summary><p>Только на <strong>~1.21.11</strong> под Fabric — мод собран именно под неё. На 1.8.9 и других версиях не запустится, даже не пробуй.</p></details>
+    <details class="faq-item"><summary>Что внутри мода?</summary><p><strong>36 модулей</strong> (эффекты, погода с торнадо, прицел, зум, фрилук, Fullbright и другие), <strong>9 HUD-виджетов</strong> с редактором, своё главное меню, менеджер аккаунтов и Discord-статус. Русский и английский языки.</p></details>
+    <details class="faq-item"><summary>Как открыть ClickGUI и HUD-редактор?</summary><p>Бинды лежат в настройках управления Minecraft, раздел <strong>TORNADO CLIENT</strong> — назначь удобные клавиши. Там же зум и свободный обзор.</p></details>
+    <details class="faq-item"><summary>Видят ли мой визуал другие игроки?</summary><p>Нет — весь визуал рисуется только у тебя на экране. Для других игроков ты выглядишь обычно. Это честно и так работают все client-side моды.</p></details>
+    <details class="faq-item"><summary>Discord / YouTube заблокированы, сижу с VPN — сайт будет работать?</summary><p><strong>Да.</strong> Сайт статический: никаких YouTube-плееров и обязательных внешних сервисов — шрифты подменяются системными, всё остальное лежит прямо здесь. VPN сайт не блокирует и не различает. Скачивание работает без входа, а если и GitHub Pages режут — качай JAR с <strong>зеркала GitHub Release</strong> в разделе «Скачать». Вход через Discord под VPN тоже работает; если закрыт и сам Discord — заходи как гость.</p></details>
     <details class="faq-item"><summary>Это бесплатно? Где качать?</summary><p>Да, бесплатно. Качай только с этого сайта кнопкой «Скачать» или из канала «файлы» нашего Discord. Не качай Tornado с чужих сайтов — там могут подсунуть вирус под нашим именем.</p></details>
     <details class="faq-item"><summary>Нужна ли лицензия Minecraft?</summary><p>Клиент работает с лицензионными аккаунтами Microsoft. Пиратские входы мы не поддерживаем — так честнее к Mojang и к серверам.</p></details>
   </div>
@@ -709,13 +754,41 @@ h2 .dim{color:var(--muted2)}
   </div>
 </footer>
 
+<!-- ============ MODAL: вход ============ -->
+<div class="modal-backdrop" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <div class="modal">
+    <h3 id="authTitle">Вход в TORNADO</h3>
+    <p class="sub">Вход — по желанию и ни к чему не обязывает. <b>Скачивание работает без него</b>.</p>
+    <div class="row">
+      <button class="btn btn-primary btn-lg" id="discordLoginGo" type="button">Войти через Discord</button>
+      <button class="btn btn-ghost btn-lg" id="guestLoginGo" type="button">Продолжить как гость</button>
+    </div>
+    <div class="or">если дискорд заблокирован</div>
+    <div class="help">
+      <b>Discord не открывается?</b><br>
+      1. Включи VPN — сайт и вход его не блокируют.<br>
+      2. Не помогло — жми «Продолжить как гость» и качай JAR с <a data-mirror href="https://github.com/magomed421/tornado-client/releases/download/v2.4.1/tornadoclient.jar">зеркала GitHub</a>.<br>
+      3. YouTube для сайта не нужен — видеоинструкций-плееров здесь нет, ничего не сломается.
+    </div>
+    <details id="authSetup">
+      <summary>Настройка для владельца: подключить свой Discord (3 шага)</summary>
+      <ol>
+        <li>Создай приложение: <b>discord.com/developers/applications → New Application</b>, вкладка OAuth2.</li>
+        <li>В Redirects добавь адрес этой страницы, скопируй <b>Client ID</b>.</li>
+        <li>Вставь его в файл сайта: <code>CLIENT_ID: '...'</code> в блоке <code>AUTH</code> внизу страницы — и залей на GitHub.</li>
+      </ol>
+    </details>
+    <button class="modal-close" id="authClose" type="button">Закрыть</button>
+  </div>
+</div>
+
 <script>
 /* TORNADO CLIENT — main.js inline. Vanilla, без зависимостей. */
 (function () {
   'use strict';
 
   /* год в футере */
-  document.getElementById('year').textContent = '© ' + new Date().getFullYear() + ' TORNADO CLIENT · v2.4.1';
+  document.getElementById('year').textContent = '© ' + new Date().getFullYear() + ' TORNADO CLIENT · v1.0.0';
 
   /* тень шапки при скролле */
   var header = document.getElementById('header');
@@ -770,13 +843,98 @@ h2 .dim{color:var(--muted2)}
   }, { threshold: 0.6 });
   counters.forEach(function (c) { cio.observe(c); });
 
-  /* живой FPS в hero-карточке — мелочь, но выглядит как продукт */
-  var fpsEl = document.getElementById('fpsNum');
-  var base = 347;
-  setInterval(function () {
-    base = Math.max(280, Math.min(420, base + (Math.random() * 24 - 12) | 0));
-    if (fpsEl) fpsEl.textContent = base;
-  }, 900);
+  /* ---------- вход: Discord / гость ---------- *
+   * Статика, без бэкенда: Discord отдаёт ?code= в redirect,
+   * обмен кода на токен делает сервер. Пока его нет — показываем
+   * честный статус и гостевой режим. Скачивание от входа не зависит.
+   */
+  var AUTH = {
+    CLIENT_ID: '', /* вставь Client ID из discord.com/developers/applications */
+    KEY: 'tornado-auth'
+  };
+  var authModal = document.getElementById('authModal');
+  var loginBtn = document.getElementById('loginBtn');
+  var authChip = document.getElementById('authChip');
+  var authName = document.getElementById('authName');
+
+  function readAuth() {
+    try { return JSON.parse(localStorage.getItem(AUTH.KEY) || 'null'); }
+    catch (e) { return null; }
+  }
+  function writeAuth(v) {
+    try {
+      if (v) localStorage.setItem(AUTH.KEY, JSON.stringify(v));
+      else localStorage.removeItem(AUTH.KEY);
+    } catch (e) {}
+  }
+  function paintAuth() {
+    var s = readAuth();
+    var logged = !!(s && (s.type === 'guest' || s.type === 'discord'));
+    if (authChip) authChip.hidden = !logged;
+    if (loginBtn) loginBtn.style.display = logged ? 'none' : '';
+    if (logged && authName) authName.textContent = s.type === 'guest' ? 'Гость' : 'Discord';
+  }
+  function openModal() { if (authModal) authModal.classList.add('open'); }
+  function closeModal() { if (authModal) authModal.classList.remove('open'); }
+
+  ['loginBtn', 'loginBtnHero', 'loginBtnDl'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (readAuth()) { paintAuth(); return; }
+      openModal();
+    });
+  });
+  var authClose = document.getElementById('authClose');
+  if (authClose) authClose.addEventListener('click', closeModal);
+  if (authModal) authModal.addEventListener('click', function (e) {
+    if (e.target === authModal) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  var guestGo = document.getElementById('guestLoginGo');
+  if (guestGo) guestGo.addEventListener('click', function () {
+    writeAuth({ type: 'guest', at: Date.now() });
+    paintAuth(); closeModal();
+  });
+  var discordGo = document.getElementById('discordLoginGo');
+  if (discordGo) discordGo.addEventListener('click', function () {
+    if (!AUTH.CLIENT_ID) {
+      var setup = document.getElementById('authSetup');
+      if (setup) setup.open = true;
+      discordGo.textContent = 'Сначала вставь Client ID (см. ниже)';
+      return;
+    }
+    var redirect = location.origin + location.pathname;
+    var url = 'https://discord.com/oauth2/authorize?client_id='
+      + encodeURIComponent(AUTH.CLIENT_ID)
+      + '&redirect_uri=' + encodeURIComponent(redirect)
+      + '&response_type=code&scope=identify';
+    location.href = url;
+  });
+  var logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) logoutBtn.addEventListener('click', function () {
+    writeAuth(null); paintAuth();
+  });
+
+  /* возврат с Discord: ?code=... или ?error=access_denied */
+  (function handleOAuthReturn() {
+    var q;
+    try { q = new URLSearchParams(location.search); }
+    catch (e) { return; }
+    if (q.get('error')) { closeModal(); paintAuth(); return; }
+    var code = q.get('code');
+    if (!code) { paintAuth(); return; }
+    writeAuth({ type: 'discord', code: code, at: Date.now() });
+    try {
+      var clean = location.pathname + location.hash;
+      history.replaceState(null, '', clean);
+    } catch (e) {}
+    paintAuth(); closeModal();
+  })();
 })();
 </script>
 </body>
