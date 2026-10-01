@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TORNADO CLIENT — Fabric-мод для Minecraft 1.21.11 | Меню, HUD, визуал. Без читов</title>
-<meta name="description" content="TORNADO CLIENT — визуальный Fabric-мод для Minecraft 1.21.11. Своё главное меню, ClickGUI, HUD-редактор, 36 модулей, погода с торнадо, Discord RPC. 0 читов.">
+<meta name="description" content="TORNADO CLIENT — визуальный Fabric-мод для Minecraft 1.21.11. Своё главное меню, ClickGUI, HUD-редактор, 43 модуля, погода с торнадо, Discord RPC. 0 читов.">
 <meta property="og:title" content="TORNADO CLIENT — выглядит как топ. Работает так же.">
-<meta property="og:description" content="36 модулей + HUD-редактор. 0 читов. Fabric 1.21.11.">
+<meta property="og:description" content="43 модуля + HUD-редактор. 0 читов. Fabric 1.21.11.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#060607">
 <link rel="icon" type="image/png" href="./logo.png">
@@ -487,7 +487,7 @@ h2 .dim{color:var(--muted2)}
     <div class="cta-row">
       <a class="btn btn-primary btn-lg" href="./tornadoclient.jar" download>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/></svg>
-        Скачать · 1.6 МБ
+        Скачать · 1.7 МБ
       </a>
       <a class="btn btn-ghost btn-lg" href="#modules">Смотреть модули</a>
       <button class="btn btn-discord btn-lg" id="loginBtnHero" type="button">Войти через Discord</button>
@@ -495,10 +495,10 @@ h2 .dim{color:var(--muted2)}
     <p class="micro">Бесплатно · Fabric Loader 0.18+ и Fabric API · кинул JAR в <code>mods</code> — и играешь</p>
     <p class="micro">Вход — по желанию, скачивание работает и так. Сайт открывается с VPN и при блокировке Discord / YouTube: никаких внешних плееров, шрифты с системным фолбэком.</p>
     <div class="stats">
-      <div class="stat"><b data-count="36">0</b><span>модулей визуала</span></div>
-      <div class="stat"><b data-count="9">0</b><span>HUD-виджетов</span></div>
+      <div class="stat"><b data-count="43">0</b><span>модуля визуала</span></div>
+      <div class="stat"><b data-count="10">0</b><span>HUD-виджетов</span></div>
       <div class="stat"><b class="green" data-count="0">0</b><span>читов внутри. Ноль</span></div>
-      <div class="stat"><b>1.6 МБ</b><span>вес мода</span></div>
+      <div class="stat"><b>1.7 МБ</b><span>вес мода</span></div>
     </div>
   </div>
   <div class="hero-visual">
@@ -530,11 +530,11 @@ h2 .dim{color:var(--muted2)}
 
   <div class="grid-3">
     <article class="card reveal"><div class="icon">⬣</div><h3>Своё главное меню</h3><p>Тёмное меню в стиле торнадо: анимированный фон, свои шрифты, быстрый вход. Менеджер аккаунтов — переключайся между никами не выходя из игры.</p><span class="tag">Alt Manager внутри</span></article>
-    <article class="card reveal"><div class="icon">▦</div><h3>ClickGUI + HUD-редактор</h3><p>36 модулей настраиваются в ClickGUI по категориям, 9 HUD-виджетов таскаются мышкой: броня, зелья, кейстроксы, таргет, ватермарка, музыка.</p><span class="tag">drag &amp; drop</span></article>
+    <article class="card reveal"><div class="icon">▦</div><h3>ClickGUI + HUD-редактор</h3><p>43 модуля настраиваются в ClickGUI по категориям, 10 HUD-виджетов таскаются мышкой: броня, зелья, кейстроксы, таргет, хотбар, музыка.</p><span class="tag">drag &amp; drop</span></article>
     <article class="card reveal"><div class="icon">◎</div><h3>Погода с торнадо</h3><p>Фирменная фишка: объёмная погода прямо в игре — дождь, молнии и настоящий торнадо. Плюс TimeChanger, своё небо, туман и Fullbright.</p><span class="tag">client-side only</span></article>
     <article class="card reveal"><div class="icon">◐</div><h3>PvP-визуал</h3><p>Kill-эффекты, кровь, след меча, хит-звуки, цифры урона и счётчик ударов до килла. Красиво — и ноль влияния на бой, всё рисуется только у тебя.</p><span class="tag">только картинка</span></article>
     <article class="card reveal"><div class="icon">▲</div><h3>Оптимизация и удобство</h3><p>Отсечение невидимых сущностей, лимит FPS в фоне, зум, свободный обзор, ToggleSprint/Sneak, физика предметов и плавный чат.</p><span class="tag">Zoom · FreeLook</span></article>
-    <article class="card reveal"><div class="icon">✦</div><h3>Discord-статус и косметика</h3><p>Rich Presence показывает друзьям твою игру автоматически. Косметика игрока, свой прицел, акцентный цвет и свечение интерфейса под себя.</p><span class="tag">Discord RPC</span></article>
+    <article class="card reveal"><div class="icon">✦</div><h3>Сетевые плащи и Discord</h3><p>Плащи Tornado с физикой ткани — видны другим игрокам с модом. Rich Presence показывает друзьям твою игру автоматически.</p><span class="tag">TornadoCape</span></article>
   </div>
 
   <!-- честный блок -->
@@ -544,8 +544,8 @@ h2 .dim{color:var(--muted2)}
       <h3>Только визуал</h3>
       <ul>
         <li>Своё меню, ClickGUI, HUD-редактор</li>
-        <li>36 модулей: эффекты, прицел, погода</li>
-        <li>9 HUD-виджетов для PvP</li>
+        <li>43 модуля: эффекты, прицел, погода</li>
+        <li>10 HUD-виджетов для PvP</li>
         <li>Discord-статус и косметика</li>
         <li>Всё рисуется только у тебя на экране</li>
       </ul>
@@ -577,7 +577,7 @@ h2 .dim{color:var(--muted2)}
 <!-- ============ MODULES ============ -->
 <section class="section container" id="modules">
   <p class="kicker">Модули</p>
-  <h2>36 модулей + HUD.<br><span class="dim">Все — про красоту и удобство.</span></h2>
+  <h2>43 модуля + HUD.<br><span class="dim">Все — про красоту и удобство.</span></h2>
   <p class="sub">Список — из самого мода, без выдумок. Ни один модуль не даёт преимущества в бою — только картинка и комфорт.</p>
 
   <div class="tabs" role="tablist" aria-label="Категории модулей">
@@ -603,7 +603,7 @@ h2 .dim{color:var(--muted2)}
       <p>Меняется только отображение. Сервер и другие игроки ничего не замечают.</p>
       <div class="mod-list">
         <div class="mod"><span>◎</span><div><b>Weather <code>торнадо</code></b><p>Фирменная погода: дождь, молнии, лужи — и настоящий торнадо в небе.</p></div></div>
-        <div class="mod"><span>◔</span><div><b>TimeChanger + CustomSky</b><p>Своё время суток и небо. Fog, WorldColor и Fullbright — ночь как день.</p></div></div>
+        <div class="mod"><span>◔</span><div><b>TimeChanger + GalaxySky</b><p>Своё время суток, небо-галактика со звёздами и туманности. Fog, WorldColor и Fullbright — ночь как день.</p></div></div>
         <div class="mod"><span>⬢</span><div><b>ViewmodelFX + BlockOverlay</b><p>Эффекты руки с предметом и подсветка блока, на который смотришь.</p></div></div>
         <div class="mod"><span>◫</span><div><b>HurtCam + ItemPhysics</b><p>Настройка тряски при уроне и живая физика выброшенных предметов.</p></div></div>
       </div>
@@ -615,7 +615,7 @@ h2 .dim{color:var(--muted2)}
         <div class="mod"><span>▤</span><div><b>HUD-редактор <code>drag&amp;drop</code></b><p>Расставь виджеты как удобно. Позиции хранятся в конфиге мода.</p></div></div>
         <div class="mod"><span>⊕</span><div><b>TargetHud + ArmorHud</b><p>Окно цели с хп и броня — всегда перед глазами, без лишнего в чате.</p></div></div>
         <div class="mod"><span>☰</span><div><b>Keystrokes + BindList</b><p>Нажатия клавиш и список биндов модулей. Для роликов и контроля.</p></div></div>
-        <div class="mod"><span>◫</span><div><b>Potions + Inventory + Music</b><p>Эффекты, содержимое инвентаря, текущий трек и ватермарка Tornado.</p></div></div>
+        <div class="mod"><span>◫</span><div><b>Potions + Inventory + Hotbar</b><p>Эффекты, содержимое инвентаря и кастомный хотбар — плюс текущий трек и ватермарка Tornado.</p></div></div>
       </div>
     </div>
     <div class="tab-panel" id="t-comfort">
@@ -626,6 +626,7 @@ h2 .dim{color:var(--muted2)}
         <div class="mod"><span>▲</span><div><b>AutoSprint + ToggleSneak</b><p>Автоспринт и переключение крады — не надо держать кнопки.</p></div></div>
         <div class="mod"><span>◈</span><div><b>CustomCrosshair + Interface</b><p>Свой прицел, акцентный цвет, свечение UI и уведомления.</p></div></div>
         <div class="mod"><span>✦</span><div><b>AltManager + Discord RPC</b><p>Смена аккаунтов без перезапуска и статус игры в Discord.</p></div></div>
+        <div class="mod"><span>▲</span><div><b>Элитры + хитбоксы</b><p>Помощник элитр, своп и след, фейерверк по клавише. Свои хитбоксы и соотношение сторон экрана.</p></div></div>
       </div>
     </div>
   </div>
@@ -634,7 +635,7 @@ h2 .dim{color:var(--muted2)}
     <div class="arch-head"><span class="pulse"></span>Как поставить — 4 шага, без магии</div>
     <div class="arch-body">
       <div class="arch-node"><b>1. Fabric</b><span>Fabric Loader 0.18+<br>и Fabric API под 1.21.11</span></div><span class="arch-arrow">→</span>
-      <div class="arch-node"><b>2. JAR</b><span>tornadoclient.jar (1.6 МБ)<br>в папку <code>mods</code></span></div><span class="arch-arrow">→</span>
+      <div class="arch-node"><b>2. JAR</b><span>tornadoclient.jar (1.7 МБ)<br>в папку <code>mods</code></span></div><span class="arch-arrow">→</span>
       <div class="arch-node"><b>3. Настройка</b><span>ClickGUI для модулей<br>HUD-редактор для виджетов</span></div><span class="arch-arrow">→</span>
       <div class="arch-node accent"><b>4. Игра</b><span>Своё меню, погода,<br>статус в Discord</span></div>
     </div>
@@ -660,14 +661,15 @@ h2 .dim{color:var(--muted2)}
         <tr><td>Игра</td><td>Minecraft ~1.21.11 (Java Edition)</td></tr>
         <tr><td>Загрузчик</td><td>Fabric Loader 0.18+ и Fabric API</td></tr>
         <tr><td>Java</td><td>Java 21+</td></tr>
-        <tr><td>Вес</td><td>1.6 МБ (tornadoclient.jar) в папку mods</td></tr>
+        <tr><td>Вес</td><td>1.7 МБ (tornadoclient.jar) в папку mods</td></tr>
         <tr><td>ОС</td><td>Windows / Linux / macOS — где идёт Fabric</td></tr>
       </table>
     </div>
     <div class="req reveal">
       <h3>Журнал версий</h3>
       <ul class="changelog">
-        <li><b>v1.0.0</b> — релиз: своё главное меню, ClickGUI, HUD-редактор, 36 модулей, погода с торнадо, Alt Manager, Discord RPC</li>
+        <li><b>v1.0.0</b> — релиз: своё главное меню, ClickGUI, HUD-редактор, погода с торнадо, Alt Manager, Discord RPC</li>
+        <li><b>v1.0.0 · новый JAR</b> — +7 модулей: небо-галактика, элитры (помощь, своп, след), хитбоксы, кастомный хотбар, сетевые плащи с физикой ткани</li>
       </ul>
       <a class="btn btn-ghost btn-sm" href="#" onclick="return false">Предложить фичу в Discord →</a>
     </div>
@@ -680,14 +682,14 @@ h2 .dim{color:var(--muted2)}
     <div class="dl-left">
       <p class="kicker">Скачать</p>
       <h2>TORNADO <span class="dim">v1.0.0</span></h2>
-      <p class="sub" style="margin:8px 0 0">Один JAR на 1.6 МБ. Без майнеров, без «амиго-браузеров», без галочек мелким шрифтом.</p>
+      <p class="sub" style="margin:8px 0 0">Один JAR на 1.7 МБ. Без майнеров, без «амиго-браузеров», без галочек мелким шрифтом.</p>
       <div class="dl-buttons">
-        <a class="btn btn-primary btn-lg" href="./tornadoclient.jar" download>⬇ Скачать · 1.6 МБ</a>
+        <a class="btn btn-primary btn-lg" href="./tornadoclient.jar" download>⬇ Скачать · 1.7 МБ</a>
         <a class="btn btn-ghost btn-lg" href="./tornadoclient.jar" download>Открыть JAR в браузере</a>
       </div>
       <p class="micro">Файл <code>tornadoclient.jar</code> лежит рядом с сайтом — кнопка выше качает его напрямую. Вход не нужен. Если провайдер режет сайт или Discord — качай с зеркала, файл тот же самый.</p>
       <div class="mirror-links">
-        <a data-mirror href="https://github.com/magomed421/tornado-client/releases/download/v2.4.1/tornadoclient.jar">Зеркало: GitHub Release · 1.6 МБ</a>
+        <a data-mirror href="https://github.com/magomed421/tornado-client/releases/download/v1.0.0/tornadoclient.jar">Зеркало: GitHub Release · 1.7 МБ</a>
         <a href="#" id="loginBtnDl">Войти через Discord →</a>
       </div>
       <div class="dl-steps">
@@ -697,7 +699,7 @@ h2 .dim{color:var(--muted2)}
       </div>
     </div>
     <div class="dl-right">
-      <div class="dl-card"><span>⬢</span><div><b>Лёгкий</b><p>1.6 МБ — в разы легче «комбайнов» с читами</p></div></div>
+      <div class="dl-card"><span>⬢</span><div><b>Лёгкий</b><p>1.7 МБ — в разы легче «комбайнов» с читами</p></div></div>
       <div class="dl-card"><span>◐</span><div><b>Готовое меню</b><p>Тёмное главное меню и Alt Manager — без плясок с конфигами</p></div></div>
       <div class="dl-card"><span>◎</span><div><b>Безопасный</b><p>0 читов, только client-side визуал — нечего детектить</p></div></div>
       <div class="dl-card"><span>✦</span><div><b>Поддержка</b><p>Отвечаем в Discord каждый вечер, <a href="#" onclick="return false">зайти →</a></p></div></div>
@@ -713,9 +715,9 @@ h2 .dim{color:var(--muted2)}
     <details class="faq-item" open><summary>Это чит? Меня забанят?</summary><p><strong>Нет, это не чит.</strong> В TORNADO CLIENT нет киллауры, флая, reach и обходов. Только визуал: меню, HUD, эффекты, погода. Мод работает через client-миксы и ничего не отправляет на сервер, поэтому античитам детектить нечего.</p></details>
     <details class="faq-item"><summary>Что нужно для установки?</summary><p>Minecraft <strong>~1.21.11</strong>, <strong>Fabric Loader 0.18+</strong>, <strong>Fabric API</strong> и <strong>Java 21+</strong>. Кинь <strong>tornadoclient.jar</strong> в папку <code>mods</code> и запускай — меню, ClickGUI и HUD уже внутри.</p></details>
     <details class="faq-item"><summary>На каких версиях работает?</summary><p>Только на <strong>~1.21.11</strong> под Fabric — мод собран именно под неё. На 1.8.9 и других версиях не запустится, даже не пробуй.</p></details>
-    <details class="faq-item"><summary>Что внутри мода?</summary><p><strong>36 модулей</strong> (эффекты, погода с торнадо, прицел, зум, фрилук, Fullbright и другие), <strong>9 HUD-виджетов</strong> с редактором, своё главное меню, менеджер аккаунтов и Discord-статус. Русский и английский языки.</p></details>
+    <details class="faq-item"><summary>Что внутри мода?</summary><p><strong>43 модуля</strong> (эффекты, погода с торнадо, небо-галактика, элитры, прицел, зум, фрилук, Fullbright и другие), <strong>10 HUD-виджетов</strong> с редактором, своё главное меню, менеджер аккаунтов, сетевые плащи и Discord-статус. Русский и английский языки.</p></details>
     <details class="faq-item"><summary>Как открыть ClickGUI и HUD-редактор?</summary><p>Бинды лежат в настройках управления Minecraft, раздел <strong>TORNADO CLIENT</strong> — назначь удобные клавиши. Там же зум и свободный обзор.</p></details>
-    <details class="faq-item"><summary>Видят ли мой визуал другие игроки?</summary><p>Нет — весь визуал рисуется только у тебя на экране. Для других игроков ты выглядишь обычно. Это честно и так работают все client-side моды.</p></details>
+    <details class="faq-item"><summary>Видят ли мой визуал другие игроки?</summary><p>Эффекты и HUD — нет, они рисуются только у тебя. Исключение — <strong>плащи Tornado</strong>: их видят другие игроки с этим модом. Для всех остальных ты выглядишь обычно.</p></details>
     <details class="faq-item"><summary>Discord / YouTube заблокированы, сижу с VPN — сайт будет работать?</summary><p><strong>Да.</strong> Сайт статический: никаких YouTube-плееров и обязательных внешних сервисов — шрифты подменяются системными, всё остальное лежит прямо здесь. VPN сайт не блокирует и не различает. Скачивание работает без входа, а если и GitHub Pages режут — качай JAR с <strong>зеркала GitHub Release</strong> в разделе «Скачать». Вход через Discord под VPN тоже работает; если закрыт и сам Discord — заходи как гость.</p></details>
     <details class="faq-item"><summary>Это бесплатно? Где качать?</summary><p>Да, бесплатно. Качай только с этого сайта кнопкой «Скачать» или из канала «файлы» нашего Discord. Не качай Tornado с чужих сайтов — там могут подсунуть вирус под нашим именем.</p></details>
   </div>
@@ -727,7 +729,7 @@ h2 .dim{color:var(--muted2)}
     <h2>Готов ворваться как шторм?</h2>
     <p>Скачай за минуту — и играй с топовой картинкой уже сегодня. Настройка — 2 минуты, бан — никогда.</p>
     <div class="cta-row">
-      <a class="btn btn-primary btn-lg" href="./tornadoclient.jar" download>⬇ Скачать TORNADO · 1.6 МБ</a>
+      <a class="btn btn-primary btn-lg" href="./tornadoclient.jar" download>⬇ Скачать TORNADO · 1.7 МБ</a>
       <a class="btn btn-ghost btn-lg" href="#" onclick="return false">Discord-сервер</a>
     </div>
   </div>
@@ -766,7 +768,7 @@ h2 .dim{color:var(--muted2)}
     <div class="help">
       <b>Discord не открывается?</b><br>
       1. Включи VPN — сайт и вход его не блокируют.<br>
-      2. Не помогло — жми «Продолжить как гость» и качай JAR с <a data-mirror href="https://github.com/magomed421/tornado-client/releases/download/v2.4.1/tornadoclient.jar">зеркала GitHub</a>.<br>
+      2. Не помогло — жми «Продолжить как гость» и качай JAR с <a data-mirror href="https://github.com/magomed421/tornado-client/releases/download/v1.0.0/tornadoclient.jar">зеркала GitHub</a>.<br>
       3. YouTube для сайта не нужен — видеоинструкций-плееров здесь нет, ничего не сломается.
     </div>
     <details id="authSetup">
