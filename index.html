@@ -309,7 +309,7 @@ h2 .dim{color:var(--muted2)}
 
 /* скачивание */
 .dl-box{
-  margin-top:26px;display:grid;grid-template-columns:1.3fr .7fr;gap:0;
+  margin-top:26px;display:grid;grid-template-columns:1fr;gap:0;
   background:linear-gradient(180deg,#131316,#0e0e11);
   border:1px solid rgba(255,255,255,.16);border-radius:22px;overflow:hidden;
 }
@@ -411,11 +411,8 @@ h2 .dim{color:var(--muted2)}
       </span>
     </a>
     <nav class="nav" aria-label="Основная навигация">
-      <a href="#features">Возможности</a>
-      <a href="#modules">Модули</a>
-      <a href="#fair">Не чит</a>
+      <a href="#info">Информация</a>
       <a href="#download">Скачать</a>
-      <a href="#faq">FAQ</a>
     </nav>
     <div class="header-actions">
       <span class="status-pill no-cheat" title="В клиенте нет читов"><span class="dot"></span>0 читов</span>
@@ -425,11 +422,8 @@ h2 .dim{color:var(--muted2)}
     </div>
   </div>
   <nav class="mobile-nav" id="mobileNav" aria-label="Мобильная навигация">
-    <a href="#features">Возможности</a>
-    <a href="#modules">Модули</a>
-    <a href="#fair">Не чит</a>
+    <a href="#info">Информация</a>
     <a href="#download">Скачать</a>
-    <a href="#faq">FAQ</a>
   </nav>
 </header>
 
@@ -450,17 +444,9 @@ h2 .dim{color:var(--muted2)}
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/></svg>
         Скачать
       </a>
-      <a class="btn btn-ghost btn-lg" href="#modules">Смотреть модули</a>
-      <a class="btn btn-discord btn-lg" href="#download">Что внутри пака</a>
+      <a class="btn btn-discord btn-lg" href="#" onclick="return false" title="Замени # на ссылку-приглашение">Discord-сервер</a>
     </div>
     <p class="micro">Бесплатно · качаешь пак, кидаешь все JAR в <code>mods</code> — и играешь</p>
-    <p class="micro">Сайт открывается с VPN и при блокировке Discord / YouTube: никаких внешних плееров, шрифты с системным фолбэком.</p>
-    <div class="stats">
-      <div class="stat"><b data-count="45">0</b><span>модулей визуала</span></div>
-      <div class="stat"><b data-count="12">0</b><span>HUD-виджетов</span></div>
-      <div class="stat"><b class="green" data-count="0">0</b><span>читов внутри. Ноль</span></div>
-      <div class="stat"><b data-count="2">0</b><span>языка: RU + EN</span></div>
-    </div>
   </div>
   <div class="hero-visual">
     <div class="logo-stage">
@@ -475,170 +461,15 @@ h2 .dim{color:var(--muted2)}
   </div>
 </section>
 
-<!-- бегущая строка -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>CLICKGUI</span><i>◆</i><span>HUD EDITOR</span><i>◆</i><span>TORNADO WEATHER</span><i>◆</i><span>FULLBRIGHT</span><i>◆</i><span>NO CHEATS</span><i>◆</i><span>FABRIC 1.21.11</span><i>◆</i><span>DISCORD RPC</span><i>◆</i><span>DARK MENU</span><i>◆</i>
-    <span>CLICKGUI</span><i>◆</i><span>HUD EDITOR</span><i>◆</i><span>TORNADO WEATHER</span><i>◆</i><span>FULLBRIGHT</span><i>◆</i><span>NO CHEATS</span><i>◆</i><span>FABRIC 1.21.11</span><i>◆</i><span>DISCORD RPC</span><i>◆</i><span>DARK MENU</span><i>◆</i>
-  </div>
-</div>
-
-<!-- ============ FEATURES ============ -->
-<section class="section container" id="features">
-  <p class="kicker">Почему Tornado</p>
-  <h2>Топ — это когда<br><span class="dim">не нужно ничего чинить.</span></h2>
-  <p class="sub">Клиент собран инженером, а не на конструкторе. Каждая опция реально работает и выключается одной кнопкой. Никаких «ультра-настроек», которые крашат игру.</p>
+<!-- ============ ИНФО: версия / discord / поддержка ============ -->
+<section class="section container" id="info">
+  <p class="kicker">Информация</p>
+  <h2>Версия, Discord<br><span class="dim">и поддержка.</span></h2>
 
   <div class="grid-3">
-    <article class="card reveal"><div class="icon">⬣</div><h3>Своё главное меню</h3><p>Тёмное меню в стиле торнадо: анимированный фон, свои шрифты, быстрый вход. Менеджер аккаунтов — переключайся между никами не выходя из игры.</p><span class="tag">Alt Manager внутри</span></article>
-    <article class="card reveal"><div class="icon">▦</div><h3>ClickGUI + HUD-редактор</h3><p>45 модулей настраиваются в ClickGUI по категориям, 12 HUD-виджетов таскаются мышкой: броня, зелья, кейстроксы, таргет, хотбар, кулдауны.</p><span class="tag">drag &amp; drop</span></article>
-    <article class="card reveal"><div class="icon">◎</div><h3>Погода с торнадо</h3><p>Фирменная фишка: объёмная погода прямо в игре — дождь, молнии и настоящий торнадо. Плюс TimeChanger, своё небо, туман и Fullbright.</p><span class="tag">client-side only</span></article>
-    <article class="card reveal"><div class="icon">◐</div><h3>PvP-визуал</h3><p>Kill-эффекты, кровь, траектории снарядов, хит-звуки, цифры урона и счётчик ударов до килла. Красиво — и ноль влияния на бой, всё рисуется только у тебя.</p><span class="tag">только картинка</span></article>
-    <article class="card reveal"><div class="icon">▲</div><h3>Оптимизация и удобство</h3><p>Отсечение невидимых сущностей, лимит FPS в фоне, зум, свободный обзор, ToggleSprint/Sneak, физика предметов и плавный чат.</p><span class="tag">Zoom · FreeLook</span></article>
-    <article class="card reveal"><div class="icon">✦</div><h3>Сетевые плащи и Discord</h3><p>Плащи Tornado с физикой ткани — видны другим игрокам с модом. Rich Presence показывает друзьям твою игру автоматически.</p><span class="tag">TornadoCape</span></article>
-  </div>
-
-  <!-- честный блок -->
-  <div class="honest reveal" id="fair">
-    <div class="honest-col good">
-      <span class="pill-yes">ЧТО ВНУТРИ</span>
-      <h3>Только визуал</h3>
-      <ul>
-        <li>Своё меню, ClickGUI, HUD-редактор</li>
-        <li>45 модулей: эффекты, прицел, погода</li>
-        <li>12 HUD-виджетов для PvP</li>
-        <li>Discord-статус и косметика</li>
-        <li>Всё рисуется только у тебя на экране</li>
-      </ul>
-    </div>
-    <div class="honest-col bad">
-      <span class="pill-no">ЧЕГО НЕТ И НЕ БУДЕТ</span>
-      <h3>Никаких читов</h3>
-      <ul>
-        <li>Нет киллауры и аимбота</li>
-        <li>Нет флая, спида, reach</li>
-        <li>Нет автототема</li>
-        <li>Нет обхода античитов</li>
-        <li>Не инжектится в чужие клиенты</li>
-      </ul>
-    </div>
-    <div class="honest-col">
-      <span class="pill-info">ПОЧЕМУ НЕ БАНЯТ</span>
-      <h3>Клиент честный</h3>
-      <ul>
-        <li>Не меняет пакеты боя</li>
-        <li>Обычный Fabric-вход на сервер</li>
-        <li>Визуал живёт только у тебя на экране</li>
-        <li>Исходники проверяются декомпилером</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ============ MODULES ============ -->
-<section class="section container" id="modules">
-  <p class="kicker">Модули</p>
-  <h2>45 модулей + HUD.<br><span class="dim">Все — про красоту и удобство.</span></h2>
-  <p class="sub">Список — из самого мода, без выдумок. Ни один модуль не даёт преимущества в бою — только картинка и комфорт.</p>
-
-  <div class="tabs" role="tablist" aria-label="Категории модулей">
-    <button class="tab on" data-tab="t-visual" role="tab">Эффекты</button>
-    <button class="tab" data-tab="t-world" role="tab">Мир</button>
-    <button class="tab" data-tab="t-hud" role="tab">HUD</button>
-    <button class="tab" data-tab="t-comfort" role="tab">Удобство</button>
-  </div>
-
-  <div class="tab-panels">
-    <div class="tab-panel on" id="t-visual">
-      <h3>Эффекты — то, за что любят Tornado</h3>
-      <p>Настраиваются в ClickGUI. Всё client-side, видно только тебе.</p>
-      <div class="mod-list">
-        <div class="mod"><span>◐</span><div><b>BloodFx + KillEffect</b><p>Кровь при ударах и эффекты убийства. Настраивается плотность и стиль.</p></div></div>
-        <div class="mod"><span>◎</span><div><b>Trajectories + Trails</b><p>Траектории стрел, жемчуга и зелий. Шлейфы движения и круги при прыжке.</p></div></div>
-        <div class="mod"><span>◈</span><div><b>CustomClouds + Atmosphere</b><p>Свои облака вместо ванильных и атмосферные частицы вокруг.</p></div></div>
-        <div class="mod"><span>⬣</span><div><b>DamageIndicators + HitsToKill</b><p>Цифры урона над целью и счётчик ударов до килла. Плюс хит-звуки.</p></div></div>
-      </div>
-    </div>
-    <div class="tab-panel" id="t-world">
-      <h3>Мир — картинка под себя</h3>
-      <p>Меняется только отображение. Сервер и другие игроки ничего не замечают.</p>
-      <div class="mod-list">
-        <div class="mod"><span>◎</span><div><b>Weather <code>торнадо</code></b><p>Фирменная погода: дождь, молнии, лужи — и настоящий торнадо в небе.</p></div></div>
-        <div class="mod"><span>◔</span><div><b>TimeChanger + GalaxySky</b><p>Своё время суток, небо-галактика со звёздами и туманности. Fog, WorldColor и Fullbright — ночь как день.</p></div></div>
-        <div class="mod"><span>⬢</span><div><b>ViewmodelFX + BlockOverlay</b><p>Эффекты руки с предметом и подсветка блока, на который смотришь.</p></div></div>
-        <div class="mod"><span>◫</span><div><b>ItemPhysics + UiGlow</b><p>Живая физика выброшенных предметов и свечение интерфейса под себя.</p></div></div>
-      </div>
-    </div>
-    <div class="tab-panel" id="t-hud">
-      <h3>HUD — панель под PvP</h3>
-      <p>Каждый виджет таскается мышкой в HUD-редакторе.</p>
-      <div class="mod-list">
-        <div class="mod"><span>▤</span><div><b>HUD-редактор <code>drag&amp;drop</code></b><p>Расставь виджеты как удобно. Позиции хранятся в конфиге мода.</p></div></div>
-        <div class="mod"><span>⊕</span><div><b>TargetHud + ArmorHud</b><p>Окно цели с хп и броня — всегда перед глазами, без лишнего в чате.</p></div></div>
-        <div class="mod"><span>☰</span><div><b>Keystrokes + BindList</b><p>Нажатия клавиш и список биндов модулей. Для роликов и контроля.</p></div></div>
-        <div class="mod"><span>◫</span><div><b>Potions + Inventory + Hotbar</b><p>Эффекты, содержимое инвентаря и кастомный хотбар.</p></div></div>
-        <div class="mod"><span>♫</span><div><b>Cooldowns + Music</b><p>Кулдауны жемчуга и зелий, текущий трек — плюс ватермарка Tornado.</p></div></div>
-      </div>
-    </div>
-    <div class="tab-panel" id="t-comfort">
-      <h3>Удобство — мелочи решают</h3>
-      <p>То, чем пользуешься каждый день и перестаёшь замечать.</p>
-      <div class="mod-list">
-        <div class="mod"><span>⊕</span><div><b>Zoom + FreeLook</b><p>Зум и свободный обзор камеры. Работают на hold-клавишах.</p></div></div>
-        <div class="mod"><span>▲</span><div><b>AutoSprint + ToggleSneak</b><p>Автоспринт и переключение крады — не надо держать кнопки.</p></div></div>
-        <div class="mod"><span>◈</span><div><b>CustomCrosshair + Interface</b><p>Свой прицел, акцентный цвет, свечение UI и уведомления.</p></div></div>
-        <div class="mod"><span>✦</span><div><b>AltManager + Discord RPC</b><p>Смена аккаунтов без перезапуска и статус игры в Discord.</p></div></div>
-        <div class="mod"><span>▲</span><div><b>Элитры + хитбоксы</b><p>Помощник элитр, своп и след, фейерверк по клавише. Свои хитбоксы и соотношение сторон экрана.</p></div></div>
-        <div class="mod"><span>♡</span><div><b>Friends</b><p>Список друзей прямо в клиенте — свои всегда на виду.</p></div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="arch reveal">
-    <div class="arch-head"><span class="pulse"></span>Как поставить — 4 шага, без магии</div>
-    <div class="arch-body">
-      <div class="arch-node"><b>1. Fabric</b><span>Fabric Loader 0.18+<br>и Fabric API под 1.21.11</span></div><span class="arch-arrow">→</span>
-      <div class="arch-node"><b>2. JAR</b><span>Все JAR из пака<br>в папку <code>mods</code></span></div><span class="arch-arrow">→</span>
-      <div class="arch-node"><b>3. Настройка</b><span>ClickGUI для модулей<br>HUD-редактор для виджетов</span></div><span class="arch-arrow">→</span>
-      <div class="arch-node accent"><b>4. Игра</b><span>Своё меню, погода,<br>статус в Discord</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ ENGINEERING ============ -->
-<section class="section container" id="engineering">
-  <p class="kicker">Под капотом</p>
-  <h2>Что внутри технически.<br><span class="dim">Без маркетинговой пыли.</span></h2>
-  <div class="grid-2">
-    <div class="fix reveal"><span class="fix-tag">client-only</span><h3>Только клиент, без сервера</h3><p>Мод работает через client-миксы Fabric: ничего не отправляет на сервер и не меняет пакеты. Поэтому визуал не палится античитами — им просто нечего детектить.</p></div>
-    <div class="fix reveal"><span class="fix-tag">optimization</span><h3>Оптимизация из коробки</h3><p>Отсечение невидимых сущностей и блок-сущностей (сундуки, таблички), лимит FPS, когда окно свёрнуто. Меньше нагрузка на видеокарту в фоне и в толпе.</p></div>
-    <div class="fix reveal"><span class="fix-tag">ru + en</span><h3>Русский и чёткие шрифты</h3><p>Интерфейс мода переведён на два языка. Пиксельные шрифты со сглаживанием лежат прямо в JAR — читаются даже мелким кеглем, ничего не докачивается.</p></div>
-    <div class="fix reveal"><span class="fix-tag">config</span><h3>Настройки хранятся локально</h3><p>ClickGUI, позиции HUD и бинды лежат в конфиге мода. Снёс и поставил заново — настрой за минуту, всё в одном месте.</p></div>
-  </div>
-
-  <div class="req-grid">
-    <div class="req reveal">
-      <h3>Системные требования</h3>
-      <p class="sub" style="font-size:14px">Обычный Fabric-набор. Ничего экзотического.</p>
-      <table>
-        <tr><td>Игра</td><td>Minecraft ~1.21.11 (Java Edition)</td></tr>
-        <tr><td>Загрузчик</td><td>Fabric Loader 0.18+ и Fabric API</td></tr>
-        <tr><td>Java</td><td>Java 21+</td></tr>
-        <tr><td>Состав</td><td>Tornado + API и FPS-моды — всё в папку mods</td></tr>
-        <tr><td>ОС</td><td>Windows / Linux / macOS — где идёт Fabric</td></tr>
-      </table>
-    </div>
-    <div class="req reveal">
-      <h3>Журнал версий</h3>
-      <ul class="changelog">
-        <li><b>v1.0.0</b> — релиз: своё главное меню, ClickGUI, HUD-редактор, погода с торнадо, Alt Manager, Discord RPC</li>
-        <li><b>v1.0.0 · новый JAR</b> — +7 модулей: небо-галактика, элитры (помощь, своп, след), хитбоксы, кастомный хотбар, сетевые плащи с физикой ткани</li>
-        <li><b>свежая сборка</b> — траектории снарядов, свои облака, друзья, фрилук, HUD кулдаунов; след меча и тряска урона убраны</li>
-        <li><b>свежая сборка 2</b> — чёткие пиксельные шрифты со сглаживанием, отсечение блок-сущностей, меньше огня на экране</li>
-        <li><b>пак</b> — Tornado + Fabric API, Sodium, Lithium, FerriteCore в одном ZIP: распаковал в mods — и играешь с FPS</li>
-      </ul>
-      <a class="btn btn-ghost btn-sm" href="#" onclick="return false">Предложить фичу в Discord →</a>
-    </div>
+    <article class="card reveal"><div class="icon">⬢</div><h3>На какую версию</h3><p>Minecraft <b>~1.21.11</b> (Java Edition), <b>Fabric Loader 0.18+</b>, Fabric API, <b>Java 21+</b>. На других версиях не запустится.</p><span class="tag">TORNADO v1.0.0</span></article>
+    <article class="card reveal"><div class="icon">✦</div><h3>Discord</h3><p>Новости, файлы и общение — на нашем Discord-сервере. Зеркало пака тоже лежит там в канале «файлы».</p><a class="btn btn-discord btn-sm" style="margin-top:14px" href="#" onclick="return false" title="Замени # на ссылку-приглашение">Открыть Discord →</a></article>
+    <article class="card reveal"><div class="icon">◎</div><h3>Поддержка</h3><p>Не запускается или что-то не так? Напиши в Discord — помогаем каждый вечер. Сначала глянь 3 шага в разделе «Скачать» ниже.</p><span class="tag">на русском</span></article>
   </div>
 </section>
 
@@ -662,40 +493,6 @@ h2 .dim{color:var(--muted2)}
         <div class="dl-step"><b>3</b><span>Запускай игру — меню, ClickGUI и HUD уже внутри</span></div>
       </div>
     </div>
-    <div class="dl-right">
-      <div class="dl-card"><span>⬢</span><div><b>Всё в одном паке</b><p>Tornado + API и моды на FPS — ставь всё разом</p></div></div>
-      <div class="dl-card"><span>◐</span><div><b>Готовое меню</b><p>Тёмное главное меню и Alt Manager — без плясок с конфигами</p></div></div>
-      <div class="dl-card"><span>◎</span><div><b>Безопасный</b><p>0 читов, только client-side визуал — нечего детектить</p></div></div>
-      <div class="dl-card"><span>✦</span><div><b>Поддержка</b><p>Отвечаем в Discord каждый вечер, <a href="#" onclick="return false">зайти →</a></p></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FAQ ============ -->
-<section class="section container narrow" id="faq">
-  <p class="kicker">FAQ</p>
-  <h2>Вопросы, которые <span class="dim">задают все.</span></h2>
-  <div class="faq">
-    <details class="faq-item" open><summary>Это чит? Меня забанят?</summary><p><strong>Нет, это не чит.</strong> В TORNADO CLIENT нет киллауры, флая, reach и обходов. Только визуал: меню, HUD, эффекты, погода. Мод работает через client-миксы и ничего не отправляет на сервер, поэтому античитам детектить нечего.</p></details>
-    <details class="faq-item"><summary>Что нужно для установки?</summary><p>Minecraft <strong>~1.21.11</strong>, <strong>Fabric Loader 0.18+</strong> и <strong>Java 21+</strong>. Скачай <strong>пак</strong> кнопкой выше — внутри уже лежат Tornado, Fabric API, Sodium, Lithium и FerriteCore. Распакуй и кинь все JAR в папку <code>mods</code>.</p></details>
-    <details class="faq-item"><summary>На каких версиях работает?</summary><p>Только на <strong>~1.21.11</strong> под Fabric — мод собран именно под неё. На 1.8.9 и других версиях не запустится, даже не пробуй.</p></details>
-    <details class="faq-item"><summary>Что внутри мода?</summary><p><strong>45 модулей</strong> (эффекты, траектории, облака, погода с торнадо, небо-галактика, элитры, друзья, прицел, зум, фрилук, Fullbright и другие), <strong>12 HUD-виджетов</strong> с редактором, своё главное меню, менеджер аккаунтов, сетевые плащи и Discord-статус. Русский и английский языки.</p></details>
-    <details class="faq-item"><summary>Как открыть ClickGUI и HUD-редактор?</summary><p>Бинды лежат в настройках управления Minecraft, раздел <strong>TORNADO CLIENT</strong> — назначь удобные клавиши. Там же зум и свободный обзор.</p></details>
-    <details class="faq-item"><summary>Видят ли мой визуал другие игроки?</summary><p>Эффекты и HUD — нет, они рисуются только у тебя. Исключение — <strong>плащи Tornado</strong>: их видят другие игроки с этим модом. Для всех остальных ты выглядишь обычно.</p></details>
-    <details class="faq-item"><summary>Discord / YouTube заблокированы, сижу с VPN — сайт будет работать?</summary><p><strong>Да.</strong> Сайт статический: никаких YouTube-плееров и обязательных внешних сервисов — шрифты подменяются системными, всё остальное лежит прямо здесь. VPN сайт не блокирует и не различает. А если и GitHub Pages режут — качай пак с <strong>зеркала GitHub Release</strong> в разделе «Скачать».</p></details>
-    <details class="faq-item"><summary>Это бесплатно? Где качать?</summary><p>Да, бесплатно. Качай только с этого сайта кнопкой «Скачать» или из канала «файлы» нашего Discord. Не качай Tornado с чужих сайтов — там могут подсунуть вирус под нашим именем.</p></details>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="container">
-  <div class="cta reveal">
-    <h2>Готов ворваться как шторм?</h2>
-    <p>Скачай за минуту — и играй с топовой картинкой уже сегодня. Настройка — 2 минуты, бан — никогда.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary btn-lg" href="./tornado-pack.zip" download>⬇ Скачать</a>
-      <a class="btn btn-ghost btn-lg" href="#" onclick="return false">Discord-сервер</a>
-    </div>
   </div>
 </section>
 
@@ -710,9 +507,7 @@ h2 .dim{color:var(--muted2)}
     </div>
     <p class="micro" style="margin:0">Не аффилирован с Mojang AB / Microsoft. Minecraft — товарный знак Mojang. TORNADO CLIENT не содержит читов и не вмешивается в работу серверов. Вся косметика — client-side.</p>
     <div class="foot-links">
-      <a href="#features">Возможности</a>
-      <a href="#modules">Модули</a>
-      <a href="#fair">Не чит</a>
+      <a href="#info">Информация</a>
       <a href="#download">Скачать</a>
       <a href="#" onclick="return false">Discord</a>
     </div>
@@ -744,17 +539,6 @@ h2 .dim{color:var(--muted2)}
     a.addEventListener('click', function () { mobileNav.classList.remove('open'); });
   });
 
-  /* табы модулей */
-  var tabs = document.querySelectorAll('.tab');
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      tabs.forEach(function (t) { t.classList.remove('on'); });
-      document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('on'); });
-      tab.classList.add('on');
-      document.getElementById(tab.dataset.tab).classList.add('on');
-    });
-  });
-
   /* появление блоков */
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
@@ -762,23 +546,6 @@ h2 .dim{color:var(--muted2)}
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
-
-  /* счётчики статистики */
-  var counters = document.querySelectorAll('[data-count]');
-  var cio = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      cio.unobserve(e.target);
-      var target = parseInt(e.target.dataset.count, 10);
-      var t0 = performance.now(), dur = 1200;
-      (function tick(t) {
-        var p = Math.min(1, (t - t0) / dur);
-        e.target.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
-        if (p < 1) requestAnimationFrame(tick);
-      })(t0);
-    });
-  }, { threshold: 0.6 });
-  counters.forEach(function (c) { cio.observe(c); });
 })();
 </script>
 </body>
