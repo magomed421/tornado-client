@@ -416,7 +416,6 @@ h2 .dim{color:var(--muted2)}
     </nav>
     <div class="header-actions">
       <span class="status-pill no-cheat" title="В клиенте нет читов"><span class="dot"></span>0 читов</span>
-      <a class="btn btn-discord btn-sm" href="#" onclick="return false" title="Замени # на свой Discord">Discord</a>
       <a class="btn btn-primary btn-sm" href="#download">Скачать</a>
       <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
@@ -432,11 +431,6 @@ h2 .dim{color:var(--muted2)}
 <!-- ============ HERO ============ -->
 <section class="container hero-grid">
   <div>
-    <div class="badges">
-      <span class="badge badge-hot">● v1.0.0 — Fabric-мод</span>
-      <span class="badge badge-white">НЕ ЧИТ · только визуал</span>
-      <span class="badge">Minecraft 1.21.11 · Java 21</span>
-    </div>
     <h1>Выглядит<br>как <span class="stroke">TOP.</span><br><span class="soft">Работает так же.</span></h1>
     <p class="lead"><strong>TORNADO CLIENT</strong> — визуальный Fabric-мод: своё главное меню, ClickGUI, HUD-редактор, погода с торнадо и Discord-статус. <span class="ok">Без киллауры, без флая, без reach.</span> Весь визуал живёт только у тебя на экране — банить тут не за что.</p>
     <div class="cta-row">
@@ -444,7 +438,6 @@ h2 .dim{color:var(--muted2)}
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/></svg>
         Скачать
       </a>
-      <a class="btn btn-discord btn-lg" href="#" onclick="return false" title="Замени # на ссылку-приглашение">Discord-сервер</a>
     </div>
     <p class="micro">Бесплатно · качаешь пак, кидаешь все JAR в <code>mods</code> — и играешь</p>
   </div>
@@ -461,16 +454,12 @@ h2 .dim{color:var(--muted2)}
   </div>
 </section>
 
-<!-- ============ ИНФО: версия / discord / поддержка ============ -->
-<section class="section container" id="info">
-  <p class="kicker">Информация</p>
-  <h2>Версия, Discord<br><span class="dim">и поддержка.</span></h2>
+<!-- ============ ИНФО: версия ============ -->
+<section class="section container narrow" id="info">
+  <p class="kicker">Версия</p>
+  <h2>На какую версию.</h2>
 
-  <div class="grid-3">
-    <article class="card reveal"><div class="icon">⬢</div><h3>На какую версию</h3><p>Minecraft <b>~1.21.11</b> (Java Edition), <b>Fabric Loader 0.18+</b>, Fabric API, <b>Java 21+</b>. На других версиях не запустится.</p><span class="tag">TORNADO v1.0.0</span></article>
-    <article class="card reveal"><div class="icon">✦</div><h3>Discord</h3><p>Новости, файлы и общение — на нашем Discord-сервере. Зеркало пака тоже лежит там в канале «файлы».</p><a class="btn btn-discord btn-sm" style="margin-top:14px" href="#" onclick="return false" title="Замени # на ссылку-приглашение">Открыть Discord →</a></article>
-    <article class="card reveal"><div class="icon">◎</div><h3>Поддержка</h3><p>Не запускается или что-то не так? Напиши в Discord — помогаем каждый вечер. Сначала глянь 3 шага в разделе «Скачать» ниже.</p><span class="tag">на русском</span></article>
-  </div>
+  <div class="card reveal"><div class="icon">⬢</div><h3>Minecraft ~1.21.11</h3><p>Fabric Loader 0.18+, Fabric API, Java 21+. На других версиях не запустится.</p><span class="tag">TORNADO v1.0.0</span></div>
 </section>
 
 <!-- ============ DOWNLOAD ============ -->
@@ -507,9 +496,8 @@ h2 .dim{color:var(--muted2)}
     </div>
     <p class="micro" style="margin:0">Не аффилирован с Mojang AB / Microsoft. Minecraft — товарный знак Mojang. TORNADO CLIENT не содержит читов и не вмешивается в работу серверов. Вся косметика — client-side.</p>
     <div class="foot-links">
-      <a href="#info">Информация</a>
+      <a href="#info">Версия</a>
       <a href="#download">Скачать</a>
-      <a href="#" onclick="return false">Discord</a>
     </div>
   </div>
 </footer>
